@@ -32,3 +32,10 @@ Skip用法：
 测试套件及Runner的运用使用：
 	测试套件Suite
 	1、用于给测试用例进行排序
+	2、管理测试用例
+测试报告HTMLTestRunner应用：
+	1、导入环境
+	下载HTMLTestRunner.py文件，导入到python中的site-packages/Lib文件夹中
+	修改部分源代码，应用于python3中，修改内容百度一下。或者直接下载应用于python3中的HTMLTestRunner.py文件
+	2、导包：from HTMLTestRunner import HTMLTestRunner
+	3、使用：会生成一个report.html格式的文件，在使用前进行路径的设置
