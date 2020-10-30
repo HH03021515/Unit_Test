@@ -1,7 +1,6 @@
 # author:ToddCombs  测试套件
 from demo.unit_test_openfile import *
 import os
-# from HTMLTestRunner import HTMLTestRunner
 from demo import HTMLTestRunner
 # 创建一个测试套件 == list
 suite = unittest.TestSuite()
