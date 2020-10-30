@@ -1,9 +1,8 @@
 # author:ToddCombs  测试套件
-
 from demo.unit_test_openfile import *
-
-from HTMLTestRunner import HTMLTestRunner
-
+import os
+# from HTMLTestRunner import HTMLTestRunner
+from demo import HTMLTestRunner
 # 创建一个测试套件 == list
 suite = unittest.TestSuite()
 
@@ -25,16 +24,26 @@ suite = unittest.TestSuite()
 # suite.addTest(unittest.TestLoader().loadTestsFromName('demo.unit_test_openfile'))  # 这里写入模块文件名而非类名
 
 # 引入形式5，读取类名来引入测试用例
-suite.addTest(unittest.TestLoader().loadTestsFromTestCase(forTestTest))
+# suite.addTest(unittest.TestLoader().loadTestsFromTestCase(forTestTest))
 
-
+report_name = '测试报告名称'
+report_title = '测试报告标题'
+report_desc = '测试报告描述'
 report_path = './report/'
-
+report_file = report_path + 'report1.html'
+if not os.path.exists(report_path):
+    os.mkdir(report_path)
+else:
+    pass
+with open(report_file, 'wb') as report:
+    suite.addTest(unittest.TestLoader().loadTestsFromName('unit_test_openfile.forTestTest'))
 
 # 套件通过TextTestRunner对象进行运行， ≈ unittest.main()
 # unittest.main()运行所有内容，而TextTestRunner仅运行选中的用例
-runner = unittest.TextTestRunner()
-runner.run(suite)
+    runner = HTMLTestRunner.HTMLTestRunner(stream=report, title=report_title,description=report_desc)
+    runner.run(suite)
+
+
 # 引入形式3，运行形式3
 # runner.run(discover)
-
+report.close()
