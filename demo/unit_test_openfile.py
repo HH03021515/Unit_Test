@@ -61,7 +61,7 @@ class forTestTest(unittest.TestCase):
         print('3')
 
     # 如果用例执行失败，则不计入失败的Case数中
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_6(self):
         print('4')
         self.assertEqual(4, 3, msg='notEqual')

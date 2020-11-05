@@ -201,9 +201,9 @@
         
     <div class='page-header'>
         <h1>测试报告标题</h1>
-    <p class='attribute'><strong>开始时间:</strong> 2020-10-30 13:08:45</p>
-<p class='attribute'><strong>运行时长:</strong> 0:00:00.000964</p>
-<p class='attribute'><strong>状态:</strong> 通过 4</p>
+    <p class='attribute'><strong>开始时间:</strong> 2020-11-05 09:50:35</p>
+<p class='attribute'><strong>运行时长:</strong> 0:00:00</p>
+<p class='attribute'><strong>状态:</strong> 通过 4 失败 1</p>
 
     </div>
     <div style="float: left;width:50%;"><p class='description'>测试报告描述</p></div>
@@ -234,13 +234,13 @@
             <td>查看</td>
         </tr>
         
-    <tr class='passClass'>
+    <tr class='failClass'>
         <td>unit_test_openfile.forTestTest</td>
+        <td>5</td>
         <td>4</td>
-        <td>4</td>
+        <td>1</td>
         <td>0</td>
-        <td>0</td>
-        <td><a href="javascript:showClassDetail('c1',4)">详情</a></td>
+        <td><a href="javascript:showClassDetail('c1',5)">详情</a></td>
     </tr>
 
 <tr id='pt1.1' class='hiddenRow'>
@@ -294,16 +294,37 @@
     </td>
 </tr>
 
-<tr id='pt1.4' class='hiddenRow'>
+<tr id='ft1.4' class='none'>
+    <td class='failCase'><div class='testcase'>test_6</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.4')" >
+        失败</a>
+
+    <div id='div_ft1.4' class="popup_window">
+        <pre>ft1.4: 4
+Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\Unit_Test\demo\unit_test_openfile.py", line 67, in test_6
+    self.assertEqual(4, 3, msg='notEqual')
+AssertionError: 4 != 3 : notEqual
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.5' class='hiddenRow'>
     <td class='none'><div class='testcase'>test_7</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.4')" >
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.5')" >
         通过</a>
 
-    <div id='div_pt1.4' class="popup_window">
-        <pre>pt1.4: 5
+    <div id='div_pt1.5' class="popup_window">
+        <pre>pt1.5: 5
 </pre>
     </div>
     <!--css div popup end-->
@@ -313,9 +334,9 @@
 
         <tr id='total_row'>
             <td>总计</td>
+            <td>5</td>
             <td>4</td>
-            <td>4</td>
-            <td>0</td>
+            <td>1</td>
             <td>0</td>
             <td>&nbsp;</td>
         </tr>
@@ -351,7 +372,7 @@
                     center: ['50%', '60%'],
                     data:[
                         {value:4, name:'通过'},
-                        {value:0, name:'失败'},
+                        {value:1, name:'失败'},
                         {value:0, name:'错误'}
                     ],
                     itemStyle: {

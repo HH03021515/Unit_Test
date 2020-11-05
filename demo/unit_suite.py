@@ -37,8 +37,9 @@ else:
 with open(report_file, 'wb') as report:
     suite.addTest(unittest.TestLoader().loadTestsFromName('unit_test_openfile.forTestTest'))
 
-# 套件通过TextTestRunner对象进行运行， ≈ unittest.main()
-# unittest.main()运行所有内容，而TextTestRunner仅运行选中的用例
+    # 套件通过TextTestRunner对象进行运行， ≈ unittest.main()
+    # unittest.main()运行所有内容，而TextTestRunner仅运行选中的用例
+    # 如果结合HTMLTestRunner使用，则需要调用HTMLTestRunner中的运行器
     runner = HTMLTestRunner.HTMLTestRunner(stream=report, title=report_title,description=report_desc)
     runner.run(suite)
 
