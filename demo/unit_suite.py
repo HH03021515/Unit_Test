@@ -29,7 +29,7 @@ report_name = '测试报告名称'
 report_title = '测试报告标题'
 report_desc = '测试报告描述'
 report_path = './report/'
-report_file = report_path + 'report1.html'
+report_file = report_path + 'report2.html'
 if not os.path.exists(report_path):
     os.mkdir(report_path)
 else:

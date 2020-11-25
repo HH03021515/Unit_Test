@@ -69,6 +69,9 @@ class forTestTest(unittest.TestCase):
     def test_7(self):
         print('5')
 
+    def test_8(self):
+        print('6')
+
 
 if __name__ == '__main__':
     unittest.main()
