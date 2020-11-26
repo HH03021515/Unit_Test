@@ -64,13 +64,28 @@ class forTestTest(unittest.TestCase):
     # @unittest.expectedFailure
     def test_6(self):
         print('4')
+        # 基本布尔断言，验证arg1是否等于arg2，不等则输出msg
         self.assertEqual(4, 3, msg='notEqual')
 
     def test_7(self):
         print('5')
+        # 验证arg1是否不等于arg2，相等则输出msg
+        self.assertNotEqual(21, 22, msg='equal')
 
     def test_8(self):
         print('6')
+        # 验证arg1大于arg2，否则fail
+        self.assertGreater(2, 1, msg='None')
+
+    def test_9(self):
+        print('7')
+        # 验证arg1大于等于arg2，否则fail
+        self.assertGreaterEqual(2, 2, msg='None')
+
+    def test_10(self):
+        print('8')
+        # 比较断言，验证arg1是否约等于arg2，places指精确到小数点后多少位，默认为7
+        self.assertAlmostEqual(100, 101, places=7, msg='notEqual')
 
 
 if __name__ == '__main__':
