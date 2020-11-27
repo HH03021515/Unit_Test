@@ -87,6 +87,17 @@ class forTestTest(unittest.TestCase):
         # 比较断言，验证arg1是否约等于arg2，places指精确到小数点后多少位，默认为7
         self.assertAlmostEqual(100, 101, places=7, msg='notEqual')
 
+    def test_11(self):
+        print('9')
+        # 比较布尔类型是否为True，否则返回msg
+        self.assertTrue(1 + 2 == 4)
+
+    def test_12(self):
+        print('10')
+        # 比较布尔类型是否为False，否则返回msg
+        self.assertFalse(1 + 2 == 4)
+
+
 
 if __name__ == '__main__':
     unittest.main()
