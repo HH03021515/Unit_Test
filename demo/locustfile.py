@@ -9,20 +9,17 @@
 # 来源：简书
 # 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
+#  服务器性能主要看：协议，并发，以及模拟真实业务场景
+# locust对于loadrunner,jmeter的优势： 开源，python，协程，高并发，性能自动化测试平台
+# 对于操作系统来说，线程是最小的执行单元，进程是最小的资源管理单元。
+# 协程，英文Coroutines，是一种比线程更轻量级的存在，正如一个进程可以拥有多个线程一样，一个线程也可以拥有多个协程。
+# 协程支持的语言：Lua5.0开始使用协程，通过扩展库coroutine来实现。
+# Python可以通过yield/send方式实现协程，在Python3.5以后，async/await成为了更好的替代方案
+# Go语言对协程的实现非常强大而简洁，可以轻松创建成百上千个协程并发执行。
+
 import time
-import json
-from locust import HttpUser, task, between, HttpLocust, TaskSet
-#
-# class WebseteTasks(TaskSet):
-#     def on_start(self):
-#         response = self.client.get("/order/orderlist", catch_response = True)
-#
-#         result = json.loads(response.text)
-#         self.gameid = result[0]['gameid']
-#
-#     @task(2)
-#     def get_unit(self):
-#         self.client.get("")
+from locust import HttpUser, task, between
+
 
 class QuickstarUser(HttpUser):
     """继承自HttpUser类"""
