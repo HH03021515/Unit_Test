@@ -1,20 +1,40 @@
 # author:ToddCombs
-import time
+# 基准测试 ： 模拟单个用户访问系统的场景，考察系统性能指标，关注系统功能是否正常，为其他压测提供基准参考。
+# 负载测试： 模拟系统在正常压力下(预期压力或者系统达到临界)的负载能力，判断是否满足业务需求。
+# 压力测试 : 不断提升系统负载知道达到性能拐点，寻找系统最大负载能力，性能瓶颈等。
+# 稳定性测试：在一定压力下持续运行，关注系统长期一定负载下是否能稳定服务。
+#
+# 作者：orientlu
+# 链接：https://www.jianshu.com/p/a97c3aec1551
+# 来源：简书
+# 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
-from locust import HttpUser, task, between
+import time
+import json
+from locust import HttpUser, task, between, HttpLocust, TaskSet
+#
+# class WebseteTasks(TaskSet):
+#     def on_start(self):
+#         response = self.client.get("/order/orderlist", catch_response = True)
+#
+#         result = json.loads(response.text)
+#         self.gameid = result[0]['gameid']
+#
+#     @task(2)
+#     def get_unit(self):
+#         self.client.get("")
 
 class QuickstarUser(HttpUser):
     """继承自HttpUser类"""
 
     wait_time = between(1, 2.5)  # 每个模拟用户等待1到2.5秒
 
-
     # 被task装饰的才会并发执行
     @task
     def hello_world(self):
         """client属性是HttpSession实例，用来发送HTTP请求"""
-        self.client.get("/Hello")
-        self.client.get("/World")
+        self.client.get("/order/orderlist")
+        self.client.get("/order/ops")
 
     # 每个类只会有一个task被选中执行
     # 3代表weight权重
@@ -31,4 +51,4 @@ class QuickstarUser(HttpUser):
 
     # 每个模拟用户开始运行时都会执行，固定搭配
     def on_start(self):
-        self.client.post("/login", json={"username": "foo", "password": "bar"})
+        self.client.post("/login", json={"username": "18800000000", "password": "asd123456"})
