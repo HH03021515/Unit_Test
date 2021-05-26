@@ -30,8 +30,8 @@ class QuickstarUser(HttpUser):
     @task
     def hello_world(self):
         """client属性是HttpSession实例，用来发送HTTP请求"""
-        self.client.get("/order/orderlist")
-        self.client.get("/order/ops")
+        self.client.get("/")
+        self.client.get("/world")
 
     # 每个类只会有一个task被选中执行
     # 3代表weight权重
