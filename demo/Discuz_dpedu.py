@@ -15,13 +15,13 @@ class Discuz_Login(TaskSet):
     @task(1)
     def login(self):
         # userinfo = choice(self.locust.userdata)
-        # userinfo = userinfo.split(",")
+        # userinfo = userinfo.split(",")。0
         # print(userinfo)
 
-        url = "oauth/token"
+        url = "basicdata/system/dict/find_by_type"
         headers = {
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/json",
         }
         # headers["Authorization"] = "Bearer " + getattr(Discuz_Login, 'login')
         data = {
