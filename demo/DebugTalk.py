@@ -1,3 +1,9 @@
+# 运行测试时输入不同参数代表
+# 如果采用no_web形式，则需使用——no-web参数，并会用到如下几个参数:
+# -c, --clients：指定并发用户数；
+# -n, --num-request：指定总执行测试；
+# -r, --hatch-rate：指定并发加压速率，默认值位1。
+
 from locust import HttpUser, TaskSet, task
 
 class WebsiteTask(TaskSet):
@@ -25,7 +31,9 @@ class WebsiteTask(TaskSet):
     def test_job2(self):
         self.client.get("/job2")
 
-
+    @task(1)
+    def test_post(self):
+        self.client.get("/post/head-first-locust-advanced-script/")
 
 
 class WebsiteUser(HttpUser):
@@ -36,3 +44,4 @@ class WebsiteUser(HttpUser):
     # 两次请求间隔1-5秒的随机值
     min_wait = 1000
     max_wait = 5000
+
