@@ -26,6 +26,16 @@ class WebsiteTask(TaskSet):
         tree = etree.HTML(html)
         return tree.xpath("//div[@class='btnbox']/input[@name='session']/@value")[0]
 
+    def on_start(self):
+        self.index = 0
+
+    @task
+    def test_visit(self):
+        url = self.locust.share_data[self.index]
+        print('visit url: %s' % url)
+        self.index = (self.index + 1) % len(self.locust.share_data)
+        self.client.get(url)
+
     @task(10)
     def test_login(self):
         html = self.client.get('/login').text
@@ -73,6 +83,10 @@ class WebsiteUser(HttpUser):
     tasks = [WebsiteTask]
 
     host = "http://debugtalk.com"
+
+    # 参数化依次传入url地址。每个虚拟用户会循环加载这100个URL地址
+    share_data = ['url1', 'url2', 'url3', 'url4', 'url5']
+
     # 两次请求间隔1-5秒的随机值
     min_wait = 1000
     max_wait = 5000
