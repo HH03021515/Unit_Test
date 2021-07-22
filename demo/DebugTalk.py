@@ -84,7 +84,7 @@ class WebsiteUser(HttpUser):
 
     host = "http://debugtalk.com"
 
-    # 参数化依次传入url地址。每个虚拟用户会循环加载这100个URL地址
+    # 参数化：依次传入url地址。每个虚拟用户会循环加载这100个URL地址
     share_data = ['url1', 'url2', 'url3', 'url4', 'url5']
 
     # 两次请求间隔1-5秒的随机值
