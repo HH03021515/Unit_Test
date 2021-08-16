@@ -1,6 +1,5 @@
 # author:ToddCombs
 import unittest
-
 # 继承测试用例
 class forTest(unittest.TestCase):
     # 类的初始化，需要@classmethod装饰器
