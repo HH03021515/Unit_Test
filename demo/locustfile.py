@@ -17,35 +17,39 @@
 # Python可以通过yield/send方式实现协程，在Python3.5以后，async/await成为了更好的替代方案
 # Go语言对协程的实现非常强大而简洁，可以轻松创建成百上千个协程并发执行。
 
-import time
+
+# 本份文件主要优化了locust测试报告的文件内容。
+
+
 from locust import HttpUser, task, between
 
 
-class QuickstarUser(HttpUser):
+class WebsiteUser(HttpUser):
     """继承自HttpUser类"""
-
-    wait_time = between(1, 2.5)  # 每个模拟用户等待1到2.5秒
+    host = "http://test.valval.cool"  # 测试页
+    wait_time = between(0, 0)  # 每个模拟用户等待1到2.5秒
 
     # 被task装饰的才会并发执行
     @task
-    def hello_world(self):
+    def api_one(self):
         """client属性是HttpSession实例，用来发送HTTP请求"""
-        self.client.get("/")
-        self.client.get("/world")
+        self.client.get("/api1")
+
 
     # 每个类只会有一个task被选中执行
     # 3代表weight权重
     # 权重越大越容易被选中执行
     # view_item比hello_world多3倍概率被选中执行
-    @task(3)
-    def view_items(self):
-        for item_id in range(10):
-            # name参数作用是把统计结果按照同一名称进行分组
-            # 这里防止URL参数不同会产生10个不同记录不便于观察
-            # 把10个汇总成1个"/item"记录
-            self.client.get(f"/item?id={item_id}", name="/item")
-            time.sleep(1)
+    @task
+    def api_two(self):
+        self.client.post("/api2", data={'key': 'value'})
+
+        # name参数作用是把统计结果按照同一名称进行分组
+        # 这里防止URL参数不同会产生10个不同记录不便于观察
+        # 把10个汇总成1个"/item"记录
+        #     self.client.get(f"/item?id={item_id}", name="/item")
+        #     time.sleep(1)
 
     # 每个模拟用户开始运行时都会执行，固定搭配
-    def on_start(self):
-        self.client.post("/login", json={"username": "18800000000", "password": "asd123456"})
+    # def on_start(self):
+    #     self.client.post("/login", json={"username": "18800000000", "password": "asd123456"})

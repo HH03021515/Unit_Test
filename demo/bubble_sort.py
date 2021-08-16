@@ -1,4 +1,3 @@
-# author:ToddCombs
 # 最简单的python冒泡排序
 def bubble_sort(array):
     for i in range(1, len(array)):
