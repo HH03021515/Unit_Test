@@ -69,7 +69,7 @@ TestRunner测试运行器：运行指定的测试用例
 ## unittest实例
 单元测试：测试函数
 
-Q&A：为什么没有main方法也可以运行呢？
+`Q&A：为什么没有main方法也可以运行呢？`
 unittest运行方式有两种：
 1、命令行的运行方式(默认的测试用例运行方式)
     1)python -m unittest 文件名.py
@@ -93,5 +93,58 @@ unittest.main()
 “E” 错误
 “s” 用例跳过 
 注：以上四种方式不能通过-v的方式运行
+
+## unittest测试用例的执行顺序规则
+以ASCII的编码大小排序【0-9，A-Z，a-z】
+通过 ord('a')查看ASCII码
+
+## 多种unittest的加载和运行测试用例的方式
+1、main方法
+2、通过测试套件来加载运行
+`AddTest`
+    _# 创建一个测试套件
+    suite = unittest.TestSuite()
+    # 通过测试套件加载测试用例
+    suite.addTest(TestUnittest('test_01_todd'))
+    suite.addTest(TestUnittest('test_02_combs'))
+    # 运行时传入默认suite参数就可以指定执行
+    unittest.main(defaultTest='suite')_
+`AddTests`
+_if __name__ == '__main__':
+    # 创建一个测试套件
+    suite = unittest.TestSuite()
+    # 通过测试套件加载测试用例
+    testcases = [TestUnittest('test_01_todd'), TestUnittest('test_02_combs')]
+    suite.addTests(testcases)
+    # 运行时传入默认suite参数就可以指定执行
+    unittest.main(defaultTest='suite')_    
+3、加载一个目录下的所有测试用例
+_if __name__ == '__main__':
+    # *.py是执行所有python文件里的测试用例，test_*.py是执行有test_前缀的文件里的测试用例
+    suite = unittest.defaultTestLoader.discover('./demo', pattern='*.py')
+    unittest.main(defaultTest='suite')_
+    
+`Q&A：为什么我们调用unittest.main()就可以执行测试用例`
+需要了解unittest的main函数继承底层原理，main = TestProgram 而TestProgram的构造函数__init__包含很多参数，
+_def __init__(self, module='__main__', defaultTest=None, argv=None,
+                    testRunner=None, testLoader=loader.defaultTestLoader,
+                    exit=True, verbosity=1, failfast=None, catchbreak=None,
+                    buffer=None, warnings=None, *, tb_locals=False):_
+其中各个参数的值分别为：
+`module:`测试用例所在的路径，__main__表示当前路径
+`defaultTest:`默认的待测试的测试用例的名称，默认执行所有用例
+`argv:`接收外部传递给程序的外部参数
+`testRiunner：`测试运行器
+`testLoader：`测试加载器
+`exit:` 是否在测试完成结束之后退出程序
+`verbosity:`显示信息的详细程度。就是verbose -v。
+数值<=0时只显示用例的总数和全局的执行结果。
+数值1是默认值，显示用例总数和全局结果，并且对每个用例的结果有个标注。
+“.” 成功
+“F” 失败
+“E” 错误
+“s” 用例跳过 
+数值>=2是显示用例总数和全局结果，并输出每个用例的详细结果
+`failfast：`是否在测试用例失败时终止测试。
 
 
