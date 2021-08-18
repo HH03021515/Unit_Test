@@ -147,4 +147,43 @@ _def __init__(self, module='__main__', defaultTest=None, argv=None,
 数值>=2是显示用例总数和全局结果，并输出每个用例的详细结果
 `failfast：`是否在测试用例失败时终止测试。
 
+`测试夹具（固件，钩子函数，前后置）TestFixtrue详解`
+setUp/tearDown 测试用例之前和之后
+pytest:fixture  实现部分前置，差异化的前置
+setUpClass/tearDownClass 测试类之前和之后（必须加@classmethod装饰器）
+setUpModule，tearDownModule 测试模块之前和之后
 
+`夹具封装：`
+自动化测试框架必备的思想（有很多重复的代码），需要封装。
+
+`忽略测试用例`
+
+
+`自动化测试框架设计模式：`
+1、POM设计模式：基础封装层，页面对象层，测试用例层。
+2、关键字驱动模式：关键字封装
+
+`公共的封装层：`
+1、钩子函数封装
+2、selenium二次封装
+3、.ini文件和yaml全局配置文件封装
+4、Excel/CSV文件的读写封装
+5、数据库操作封装
+6、调用外部的第三方库封装
+
+`数据层：`
+EXCEL数据驱动
+CSV数据驱动
+YAML数据驱动
+数据库数据驱动
+
+`文件层：`
+1、HTML报告文件
+2、Log日志文件
+3、全局配置文件
+4、错误截图文件
+5、邮件附件文件
+6、接口关联文件
+
+`Github版本控制集成pycharm开发`
+`Jenkins定时构建定时执行，持续集成`

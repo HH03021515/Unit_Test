@@ -1,7 +1,8 @@
 # 简单的unittest实例
 import unittest
+from demo.common.my_unit import MyUnit
 
-class TestUnittest(unittest.TestCase):
+class TestUnittest(MyUnit):
 
     def test_01_todd(self):
         print("测试todd")

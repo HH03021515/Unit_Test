@@ -1,8 +1,5 @@
 # 这是test_unittest.py, test_pytest.py相关的执行main文件
-import os
 import unittest
-import pytest
-from demo.test_unittest import TestUnittest
 
 # if __name__ == '__main__':
 #     # 创建一个测试套件
@@ -19,5 +16,5 @@ from demo.test_unittest import TestUnittest
 # 执行所有测试用例
 if __name__ == '__main__':
     # *.py是执行所有python文件里的测试用例，test_*.py是执行有test_前缀的文件里的测试用例
-    suite = unittest.defaultTestLoader.discover('./demo', pattern='*.py')
+    suite = unittest.defaultTestLoader.discover('./demo', pattern='test_*.py')
     unittest.main(defaultTest='suite')
