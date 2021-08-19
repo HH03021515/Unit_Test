@@ -187,3 +187,23 @@ YAML数据驱动
 
 `Github版本控制集成pycharm开发`
 `Jenkins定时构建定时执行，持续集成`
+
+`断言（判断用例是否执行成功）`
+assertEqual(a,b)        a==b
+assertNotEqual(a,b)     a!=b
+assertTrue(x)           bool(x) is True
+assertFalse(x)          bool(x) is False
+assertIs(a,b)           a is b
+assertIsNot(a,b)        a is not b
+assertIsNotNone(x)      x is not None
+assertIn(a,b)           a in b
+assertNotIn(a,b)        a not in b
+assertIsInstance(a,b)   isinstance(a,b)
+assertNotIsInstance(a,b) not isinstance
+
+`实际工作应用断言：`
+assertEqual(a, b)
+assertIn(a, b)
+assertTrue(x)
+
+`批量生成测试报告`
