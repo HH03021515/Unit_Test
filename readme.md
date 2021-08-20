@@ -206,4 +206,8 @@ assertEqual(a, b)
 assertIn(a, b)
 assertTrue(x)
 
-`批量生成测试报告`
+`批量生成自动化测试报告 `
+1、txt格式的测试报告
+2、html格式的测试报告
+    1)下载HTMLTestRunner.py文件（官方的支支持到python2.7，需要下载下来手动修改）
+    复制到python安装库\Lib或者直接放到项目文件夹下
