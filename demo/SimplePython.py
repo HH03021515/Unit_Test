@@ -1,5 +1,5 @@
 # 一些常用好用的python代码
-# 来源：http://www.51testing.com/html/58/n-4478758.html
+# 来源：
 import streamlit as st
 from collections import Counter
 
@@ -104,3 +104,30 @@ def count_string():
     print(count.most_common(1))
 
 count_string()
+
+
+def anagrams():
+    """查找两个字符串是否为anagrams，
+    两个字符串的counter对象相等，则他们就是anagrams"""
+    str_one, str_two, str_three = "acbde", "abced", "abcda"
+    cnt_one, cnt_two, cnt_three = Counter(str_one), Counter(str_two), Counter(str_three)
+    if cnt_one == cnt_two:
+        print("1 and 2 is anagrams")
+    if cnt_one == cnt_three:
+        print("1 and 3 is anagrams")
+
+anagrams()
+
+def try_except():
+    """使用try-except-else模块"""
+    a, b = 1, 0
+    try:
+        print(a/b)
+    except ZeroDivisionError:
+        print("division by zero")
+    else:
+        print("no exceptions raised")
+    finally:
+        print("Run this always")
+
+try_except()
