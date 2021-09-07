@@ -1,7 +1,10 @@
 # 一些常用好用的python代码
-# 来源：
+# 来源：http://www.51testing.com/html/58/n-4478758.html
 import streamlit as st
+import sys
+import time
 from collections import Counter
+
 
 def reversed_string():
     """Reversing a string using slicing 反转字符串"""
@@ -131,3 +134,39 @@ def try_except():
         print("Run this always")
 
 try_except()
+
+
+def research_sort():
+    """以下脚本使用列举来迭代列表中的值及其索引。原始脚本有误，已修正"""
+    my_list = ["a, b, c, d, e"]
+    for index, value in enumerate(my_list):
+        print("{0}: {1}".format(index, value))
+
+research_sort()
+
+def check_memory():
+    """以下脚本检查对象的内存使用"""
+    num = 21
+    print(sys.getsizeof(num))
+
+check_memory()
+
+def merge_dict():
+    """合并两个字典 """
+    dict_one = {"apple": 9, "banana": 6}
+    dict_two = {"banana": 4, "orange": 8}
+    combined_dict = {**dict_one, **dict_two}
+    print(combined_dict)
+
+merge_dict()
+
+def count_time():
+    """用time函数计算执行一段代码所需时间，代码有误"""
+    start_time = time.time()
+    a, b = 1, 2
+    c = a + b
+    end_time = time.time()
+    time_taken_in_micro = (end_time - start_time) * (10**6)
+    print("Time taken in micro_seconds: {0}ms".format(time_taken_in_micro))
+
+count_time()
