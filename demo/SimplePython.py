@@ -3,7 +3,11 @@
 import streamlit as st
 import sys
 import time
+import random
+import secrets
 from collections import Counter
+from iteration_utilities import deepflatten
+
 
 
 def reversed_string():
@@ -170,3 +174,57 @@ def count_time():
     print("Time taken in micro_seconds: {0}ms".format(time_taken_in_micro))
 
 count_time()
+
+
+
+def flatten(I):
+    """有时候不确定列表嵌套的深度，又想要全部要素在单个平面列表中展示可以通过以下方式"""
+    return [item for sublist in I for item in sublist]
+I = [[1, 2, 3], [3]]
+print(flatten(I))
+I = [[1, 2, 3], [4, [5], [6, 7]], [8, [9, [10]]]]
+print(list(deepflatten(I, depth=3)))
+
+
+def random_samples():
+    """列表取样，通过random软件库，从给定的列表中生成N个随机样本"""
+    my_list = ['a', 'b', 'c', 'd', 'e']
+    num_samples = 2
+    samples = random.sample(my_list, num_samples)
+    print(samples)
+
+random_samples()
+
+# 列表取样python3用法
+def secure_random():
+    """列表取样python3用法，需要secrets库"""
+    secure_random = secrets.SystemRandom()
+    my_list = ['a', 'b', 'c', 'd', 'e']
+    num_samples = 3
+    samples = secure_random.sample(my_list, num_samples)
+    print(samples)
+
+secure_random()
+
+
+def change_num():
+    """将一个整数转换为数字列表"""
+    num = 123456
+    list_of_digits = list(map(int, str(num)))
+    print(list_of_digits)
+    list_of_digits = [int(x) for x in str(num)]
+    print(list_of_digits)
+
+change_num()
+
+def check_onlyOne():
+    """检查唯一性"""
+    def unique(i):
+        if len(i) == len(set(i)):
+            print("All elements are unique")
+        else:
+            print("List has duplicates")
+    unique([1, 2, 3, 4])
+    unique([1, 1, 3, 4])
+
+check_onlyOne()
