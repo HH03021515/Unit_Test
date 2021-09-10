@@ -58,7 +58,8 @@ def main():
     t = turtle.Turtle()
     # 设置画布大小
     w = turtle.Screen()
-    t.hideturtle()  # 隐藏画笔
+    # t.hideturtle()  # 隐藏画笔轨迹
+    ht()    # 隐藏中心点画笔
     getscreen().tracer(5, 0)
     w.screensize(bg='wheat')  # wheat小麦
     t.left(90)
