@@ -55,7 +55,7 @@ def tree(n, L):
             backward(dis)
             setheading(t)
     pu()
-    backward(L) # 退回
+    backward(L)  # 退回
 
 bgcolor(0.5, 0.5, 0.5)  # 背景色
 ht()    # 隐藏中心点画笔
@@ -68,4 +68,3 @@ pu()    # 抬笔
 backward(300)   # 后退300
 tree(12, 100)   # 递归7层
 done()
-
