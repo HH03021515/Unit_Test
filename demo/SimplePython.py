@@ -2,12 +2,12 @@
 # 来源：http://www.51testing.com/html/58/n-4478758.html
 import streamlit as st
 import sys
-import time
 import random
 import secrets
+import time
 from collections import Counter
 from iteration_utilities import deepflatten
-
+from time import *
 
 
 def reversed_string():
@@ -228,3 +228,6 @@ def check_onlyOne():
     unique([1, 1, 3, 4])
 
 check_onlyOne()
+
+elapsed = (time.clock() - start)
+print("Time used:", elapsed)
