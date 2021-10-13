@@ -39,7 +39,7 @@ class UserBehavior(HttpUser):
     @task(1)
     def test_post(self):
         """由于没有免费的post接口，暂时用百度搜索"""
-        self.client.post("https://baidu.com?wd=testerhome", name="使用百度搜索")
+        self.client.post("https://baidu.com/s?wd=etcp", name="使用百度搜索关键字‘etcp’")
 
 class WebUser(TaskSet):
     """性能测试配置，换算配置"""
