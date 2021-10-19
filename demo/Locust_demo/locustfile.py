@@ -35,7 +35,6 @@ class WebsiteUser(HttpUser):
         """client属性是HttpSession实例，用来发送HTTP请求"""
         self.client.get("/api1")
 
-
     # 每个类只会有一个task被选中执行
     # 3代表weight权重
     # 权重越大越容易被选中执行

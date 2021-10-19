@@ -1,8 +1,8 @@
 # 大鹏教育login页面登录性能测试
 
 from locust import HttpUser, TaskSet, task
-from random import choice
-import requests
+
+
 class Discuz_Login(TaskSet):
 
     @task(2)
@@ -35,6 +35,7 @@ class Discuz_Login(TaskSet):
             print(response.text)
             return response
 
+
 class Discuz_User(HttpUser):
     tasks = [Discuz_Login]
     # 等待时间
@@ -46,6 +47,7 @@ class Discuz_User(HttpUser):
     # with open("data/userdata.csv", "r") as file:
     #     for line in file.readlines():
     #         userdata.append(line.strip())
+
 
 if __name__ == '__main__':
     pass
