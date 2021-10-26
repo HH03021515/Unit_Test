@@ -53,9 +53,9 @@ class UserBehavior(HttpUser):
 class WebUser(TaskSet):
     """性能测试配置，换算配置"""
     task_set = UserBehavior  # Testcase类
-    host = "https://baidu.com"
     min_wait = 1000
     max_wait = 3000
+    host = "https://baidu.com"
 
 #
 # class TestLocust(HttpLocust):
