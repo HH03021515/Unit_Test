@@ -1,3 +1,10 @@
+# 在单机上利用多核处理器执行多个worker，
+# 需要在设备管理器查看CPU有几个核心，worker的数量不能超过本机的处理器数，
+# 建议不要全部占用，如8核CPU用6核:1主5从，留两核备用
+# 主机：locust -f locustDemo.py --master
+# 工作机：运行cmd命令打开多个新窗体进入路径运行命令locust -f locustDemo.py --worker
+
+
 import sys
 import time
 
