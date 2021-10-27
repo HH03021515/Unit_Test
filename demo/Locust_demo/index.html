@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Locust性能测试工具</title>
+    <link rel="stylesheet" type="text/css" href="./static/css/application.css?v={{ version }}" media="screen">
+    <link rel="shortcut icon" href="./static/img/favicon.ico" type="image/x-icon"/>
+</head>
+<body class="{{state}}">
+    <div class="top">
+        <div class="top-content container">
+            <img src="./static/img/logo.png?v={{ version }}" class="logo" />
+            <div class="boxes">
+                <div class="top_box box_url">
+                    <div class="label">HOST</div>
+                    <div class="value" id="host_url">
+                        {{ host or "" }}
+                    </div>
+                </div>
+                <div class="top_box box_status">
+                    <div class="label">状态</div>
+                    <div class="value" id="status_text">
+                        {{state}}
+                    </div>
+                    <div class="user_count">
+                        <span id="userCount">{{user_count}}</span> 个用户
+                    </div>
+                    <a href="#" class="new-test" id="new-test">新测试</a>
+                    <a href="#" class="edit-test" id="edit-test">编辑</a>
+                </div>
+                {% if is_distributed %}
+                    <div class="top_box box_workers" id="box_workers">
+                        <div class="label">工作机</div>
+                        <div class="value" id="workerCount">{{worker_count}}</div>
+                    </div>
+                {% endif %}
+                <div class="top_box box_rps box_running" id="box_rps">
+                    <div class="label">RPS</div>
+                    <div class="value" id="total_rps">0</div>
+                </div>
+                <div class="top_box box_fail box_running" id="box_fail">
+                    <div class="label">失败率</div>
+                    <div class="value"><span id="fail_ratio"></span>%</div>
+                </div>
+                <div class="top_box box_stop box_running" id="box_stop">
+                    <a href="./stop" class="stop-button"><i></i>停止</a>
+                    <a href="./stats/reset" class="reset-button">重启<br>状态</a>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    
+    <div class="dialogs">
+        <div class="dialog start" id="start">
+            <div style="position:relative;">
+                <a href="#" class="close_link">关闭</a>
+            </div>
+            <div class="padder">
+                <h2>开始加载新测试</h2>
+                <form action="./swarm" method="POST" id="swarm_form">
+                    {% if is_shape %}
+                        <label for="user_count">用户数 <span style="color:#8a8a8a;">(peak concurrency)</span></label>
+                        <input type="text" name="user_count" id="user_count" class="val_disabled" value="-" disabled="disabled" title="Disabled for tests using LoadTestShape class"/><br>
+                        <input type="hidden" name="user_count" id="user_count" value="0"/><br>
+                        <label for="spawn_rate">每秒加载用户 <span style="color:#8a8a8a;">(users started/second)</span></label>
+                        <input type="text" name="spawn_rate" id="spawn_rate" class="val_disabled" value="-" disabled="disabled" title="Disabled for tests using LoadTestShape class"/><br>
+                        <input type="hidden" name="spawn_rate" id="spawn_rate" value="0"/><br>
+                    {% else %}
+                        <label for="user_count">用户数 <span style="color:#8a8a8a;">(peak concurrency)</span></label>
+                        <input type="text" name="user_count" id="user_count" class="val" value="{{ num_users or "1" }}" onfocus="this.select()"/><br>
+                        <label for="spawn_rate">每秒加载用户 <span style="color:#8a8a8a;">(users started/second)</span></label>
+                        <input type="text" name="spawn_rate" id="spawn_rate" class="val" value="{{ spawn_rate or "1" }}" onfocus="this.select()"/><br>
+                    {% endif %}
+                    <label for="host">
+                        Host <span style="color:#8a8a8a;">(e.g. http://www.example.com)</span>
+                        {% if override_host_warning %}
+                            <span style="color:#8a8a8a; font-size:12px;">(设置此参数将覆盖所有User类上的host)</span></label>
+                        {% endif %}
+                    </label>
+                    <input type="text" name="host" id="host" class="val" autocapitalize="off" autocorrect="off" value="{{ host  or "" }}" onfocus="this.select()"/><br>
+                    <button type="submit">开始运行</button>
+                </form>
+                <div style="clear:right;"></div>
+            </div>
+        </div>
+
+        <div class="dialog edit" id="edit">
+            <div style="position:relative;">
+                <a href="#" class="close_link">关闭</a>
+            </div>
+            <div class="padder">
+                <h2>编辑正在运行的负载测试</h2>
+                <form action="./swarm" method="POST" id="edit_form">
+                    {% if is_shape %}
+                        <label for="new_user_count">用户数 (peak concurrency)</label>
+                        <input type="text" name="user_count" id="new_user_count" class="val_disabled"  value="-" disabled="disabled" title="Disabled for tests using LoadTestShape class"/><br>
+                        <label for="spawn_rate">每秒加载用户 <span style="color:#8a8a8a;">(users added/stopped per second)</span></label>
+                        <input type="text" name="spawn_rate" id="new_spawn_rate" class="val_disabled"  value="-" disabled="disabled" title="Disabled for tests using LoadTestShape class"/><br>
+                    {% else %}
+                        <label for="new_user_count">用户数 (peak concurrency)</label>
+                        <input type="text" name="user_count" id="new_user_count" class="val"  value="{{ num_users or "1" }}" onfocus="this.select()"/><br>
+                        <label for="spawn_rate">每秒加载用户 <span style="color:#8a8a8a;">(users added/stopped per second)</span></label>
+                        <input type="text" name="spawn_rate" id="new_spawn_rate" class="val"  value="{{ spawn_rate or "1" }}" onfocus="this.select()"/><br>
+                    {% endif %}
+                    {% if is_shape %}
+                        <button type="submit" disabled>开始运行</button>
+                    {% else %}
+                        <button type="submit">开始运行</button>
+                    {% endif %}
+                </form>
+                <div style="clear:right;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main" id="main">
+        <nav class="menu">
+            <ul class="tabs container">
+                <li><a href="#">统计</a></li>
+                <li><a href="#" class="chart-tab-link">图表</a></li>
+                <li><a href="#">失败数</a></li>
+                <li><a href="#">错误</a></li>
+                <li><a href="#">下载数据</a></li>
+                {% if is_distributed %}
+                    <li><a href="#">工作机</a></li>
+                {% endif %}
+                {% block extended_tabs %}{% endblock extended_tabs %}
+            </ul>
+        </nav>
+        <div class="panes container">
+            <div style="display:none;">
+                <table id="stats" class="stats">
+                    <thead>
+                        <tr>
+                            <th class="stats_label" href="#" data-sortkey="method">类型</th>
+                            <th class="stats_label" href="#" data-sortkey="name">名称</th>
+                            <th class="stats_label numeric nowrap" href="#" data-sortkey="num_requests" title="Number of successful requests">请求数</th>
+                            <th class="stats_label numeric nowrap" href="#" data-sortkey="num_failures" title="Number of failures">失败数</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="median_response_time" title="Median response time">响应时间中位数 (ms)</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="ninetieth_response_time" title="Ninetieth percentile response time, because the response time greater than 100ms is rounded, you may see it greater than the max response time">90%响应时间 (ms)</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="avg_response_time" title="Average response time">平均响应时间 (ms)</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="min_response_time" title="Min response time">最小响应时间 (ms)</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="max_response_time" title="Max response time">最大响应时间 (ms)</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="avg_content_length" title="Average response size">平均字节数 (bytes)</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="current_rps" title="Current number of requests per second">每秒请求数</th>
+                            <th class="stats_label numeric" href="#" data-sortkey="current_fail_per_sec" title="Current number of failures per second">每秒失败数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="charts" style="display:none;">
+                <div class="charts-container"></div>
+            </div>
+            <div style="display:none;">
+                <table id="errors" class="stats">
+                    <thead>
+                        <th class="error_count stats_label" data-sortkey="occurrences">失败数</th>
+                        <th class="stats_label" href="#" data-sortkey="method">请求方式</th>
+                        <th class="stats_label" href="#" data-sortkey="name">名称</th>
+                        <th class="error_type stats_label" data-sortkey="error">错误类型</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div style="display:none;">
+                <table id="exceptions" class="stats">
+                    <thead>
+                        <th class="exception_occurrences stats_label">发生</th>
+                        <th class="exception_traceback stats_label">错误信息报告</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div style="display:none;">
+                <div style="margin-top:20px;">
+                    <a href="./stats/requests/csv">下载请求统计 CSV</a><br>
+                    {% if stats_history_enabled %}
+                        <a href="./stats/requests_full_history/csv">Download full request statistics history CSV</a><br>
+                    {% endif %}
+                    <a href="./stats/failures/csv">下载失败 CSV</a><br>
+                    <a href="./exceptions/csv">下载错误 CSV</a><br>
+                    <a href="./stats/report" target="_blank">下载结果报告</a><br>
+                </div>
+            </div>
+            {% if is_distributed %}
+                <div style="display:none;">
+                    <table class="stats" id="workers">
+                        <thead>
+                            <tr>
+                                <th class="stats_label" href="#" data-sortkey="id">工作机</th>
+                                <th class="stats_label" href="#" data-sortkey="state">状态</th>
+                                <th class="stats_label numeric" href="#" data-sortkey="user_count" title="Number of users on this worker">用户数</th>
+                                <th class="stats_label numeric" href="#" data-sortkey="cpu_usage" title="CPU usage of process">CPU使用率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+            {% block extended_panes %}{% endblock extended_panes %}
+        </div>
+
+        <div class="about" style="display:none;">
+            <div style="position:relative;">
+                <a href="#" class="close_link">关闭</a>
+            </div>
+            <div class="padder">
+                <h1>关于</h1>
+                <p>
+                    Locust最初的想法是Carl Byström的，他在2010年6月进行了第一次概念验证。  
+					Jonatan Heyman在2011年1月接手Locust，实现了Locust类的当前概念  
+					并使其在多台机器上分布工作。
+                </p>
+                <p>
+                    Jonatan, Carl和Joakim Hamrén继续在他们的工作中开发Locust，
+                    ESN社交软件公司(ESN社交软件公司已经于2012年被美国艺电EA收购.)，已经将Locust作为一个内部开源项目。
+                </p>
+
+                <h1>作者和版权</h1>
+                <a href="http://cgbystrom.com/">Carl Byström</a> (<a href="https://twitter.com/cgbystrom/">@cgbystrom</a>)<br>
+                <a href="http://heyman.info/">Jonatan Heyman</a> (<a href="https://twitter.com/jonatanheyman/">@jonatanheyman</a>)<br>
+                Joakim Hamrén (<a href="https://twitter.com/Jahaaja/">@jahaaja</a>)<br>
+                <a href="http://esn.me/">ESN Social Software</a> (<a href="https://twitter.com/uprise_ea/">@uprise_ea</a>)<br>
+                Hugo Heyman (<a href="https://twitter.com/hugoheyman/">@hugoheyman</a>)
+
+
+                <h1>许可证</h1>
+                在MIT许可下的开源项目.
+
+                <h2>版本 <a href="https://github.com/locustio/locust/releases/tag/{{version}}">{{version}}</a></h2>
+                <br>
+                <a href="https://locust.io/">https://locust.io</a>
+            </div>
+        </div>
+    </div>
+    <nav class="footer">
+        <div class="container">
+            <a href="#" onclick="$('.about').fadeIn();">关于</a>
+        </div>
+    </nav>
+
+
+    <script type="text/javascript" src="./static/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="./static/jquery.jqote2.min.js"></script>
+    <script type="text/javascript" src="./static/jquery.tools.min.js"></script>
+    <!-- echarts from https://github.com/ecomfe/echarts -->
+    <script type="text/javascript" src="./static/echarts.common.min.js"></script>
+    <!-- vintage theme of echarts -->
+    <script type="text/javascript" src="./static/vintage.js"></script>
+    <script type="text/x-jqote-template" id="stats-template">
+        <![CDATA[
+        <tr class="<%=(this.is_aggregated ? "total" : "")%>">
+            <td><%= (this.method ? this.method : "") %></td>
+            <td class="name" title="<%= this.name %>"><%= this.safe_name %></td>
+            <td class="numeric"><%= this.num_requests %></td>
+            <td class="numeric"><%= this.num_failures %></td>
+            <td class="numeric"><%= Math.round(this.median_response_time) %></td>
+            <td class="numeric"><%= Math.round(this.ninetieth_response_time) %></td>
+            <td class="numeric"><%= Math.round(this.avg_response_time) %></td>
+            <td class="numeric"><%= this.min_response_time %></td>
+            <td class="numeric"><%= this.max_response_time %></td>
+            <td class="numeric"><%= Math.round(this.avg_content_length) %></td>
+            <td class="numeric"><%= Math.round(this.current_rps*100)/100 %></td>
+            <td class="numeric"><%= Math.round(this.current_fail_per_sec*100)/100 %></td>
+        </tr>
+        <% alternate = !alternate; %>
+        ]]>
+    </script>
+    <script type="text/x-jqote-template" id="errors-template">
+        <![CDATA[
+        <tr>
+            <td><%= this.occurrences %></td>
+            <td><%= this.method %></td>
+            <td><%= this.name %></td>
+            <td><%= function(e) { return e.replace("<", "&lt;"); }(this.error) %></td>
+        </tr>
+        <% alternate = !alternate; %>
+        ]]>
+    </script>
+    <script type="text/x-jqote-template" id="exceptions-template">
+        <![CDATA[
+        <tr>
+            <td class="occurrences"><%= this.count %></td>
+            <td class="traceback" title="Occurred on: <%= this.nodes %>"><%= function(e) { return e.replace("<", "&lt;"); }(this.traceback) %>
+<%= function(e) { return e.replace("<", "&lt;"); }(this.msg) %></td>
+        </tr>
+        <% alternate = !alternate; %>
+        ]]>
+    </script>
+    <script type="text/x-jqote-template" id="worker-template">
+        <![CDATA[
+        <tr class="<%=(this.name == "Total" ? "total" : "")%>">
+            <td><%= this.id %></td>
+            <td><%= this.state %></td>
+            <td class="numeric"><%= this.user_count %></td>
+            <td class="numeric"><%= this.cpu_usage %>%</td>
+        </tr>
+        <% alternate = !alternate; %>
+        ]]>
+    </script>
+    <script type="text/javascript">
+        {% include 'stats_data.html' %}
+    </script>
+    <script type="text/javascript" src="./static/chart.js?v={{ version }}"></script>
+    <script type="text/javascript" src="./static/locust.js?v={{ version }}"></script>
+    {% block extended_script %}
+    {% endblock extended_script %}
+</body>
+</html>
