@@ -17,16 +17,13 @@
 # 2、压力测试时间久了，TPS就会抖动，而且越往后越厉害，说明资源释放有点问题，需要时间释放，然后才能回收，TPS才能提升
 # 3、设置了最大的等待处理数, 超过负载了服务就自动丢弃了，出现这种情况就得扩容了
 
-
 import sys
 import time
-
-from locust import task, events, User
+from locust import task, events, User, HttpUser, TaskSet
 # 使用FastHttpUser替代requests,提升5-6倍的并发量
 from locust.contrib.fasthttp import FastHttpUser
 
-
-class UserBehavior(FastHttpUser):
+class UserBehavior(TaskSet):
     """Locust任务集，定义每个locust行为"""
 
     def on_start(self):
@@ -65,20 +62,12 @@ class UserBehavior(FastHttpUser):
         self.client.post("/s?wd=etcp", name="使用百度搜索关键字etcp")
 
 
-class WebUser(User):
+class WebUser(FastHttpUser):
+    # class WebUser(HttpUser):   # 用requsts方法 rps可以很高，但失败事务也很高，用FastHttpUser失败事务很低但rps没有超过30，头疼
     """性能测试配置，换算配置"""
-    tasks = [UserBehavior]  # Testcase类
-    min_wait = 100
-    max_wait = 300
+    # task_set = UserBehavior  # Testcase类,1.0的旧语法，已经废弃
+    tasks = [UserBehavior]
+    min_wait = 1000
+    max_wait = 3000
     host = "https://baidu.com"
 
-#
-# class TestLocust(HttpLocust):
-#     """自定义locust类，可设置Locust的参数"""
-#     tast_set = UserBeHavior
-#     host = "https://www.baidu.com"  # 被测域名/服务器地址
-#     min_wait = 5000
-#     # 最小等待时间，至少等待多少秒后Locust选择执行一个任务。
-#
-#     max_wait = 9000
-#     # 最大等待时间，最多等待多少秒后Locust选择执行一个任务。
