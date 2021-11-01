@@ -16,7 +16,6 @@
 # 分析：1、可能是python的垃圾回收机制占用了资源
 # 2、压力测试时间久了，TPS就会抖动，而且越往后越厉害，说明资源释放有点问题，需要时间释放，然后才能回收，TPS才能提升
 # 3、设置了最大的等待处理数, 超过负载了服务就自动丢弃了，出现这种情况就得扩容了
-
 import sys
 import time
 from locust import task, events, User, HttpUser, TaskSet
@@ -63,7 +62,7 @@ class UserBehavior(TaskSet):
 
 
 class WebUser(FastHttpUser):
-    # class WebUser(HttpUser):   # 用requsts方法 rps可以很高，但失败事务也很高，用FastHttpUser失败事务很低但rps没有超过30，头疼
+# class WebUser(HttpUser):   # 用requsts方法 rps可以很高，但失败事务也很高，用FastHttpUser失败事务很低但rps没有超过30，头疼
     """性能测试配置，换算配置"""
     # task_set = UserBehavior  # Testcase类,1.0的旧语法，已经废弃
     tasks = [UserBehavior]

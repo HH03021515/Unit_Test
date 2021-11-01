@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Locust性能测试工具</title>
+    <title>Locust性能测试 {{ locustfile }}</title>
     <link rel="stylesheet" type="text/css" href="./static/css/application.css?v={{ version }}" media="screen">
     <link rel="shortcut icon" href="./static/img/favicon.ico" type="image/x-icon"/>
+    {% block extended_head %}
+    {% endblock extended_head %}
 </head>
 <body class="{{state}}">
     <div class="top">
@@ -78,6 +80,23 @@
                         {% endif %}
                     </label>
                     <input type="text" name="host" id="host" class="val" autocapitalize="off" autocorrect="off" value="{{ host  or "" }}" onfocus="this.select()"/><br>
+                    {% if extra_options %}<label>自定义参数:</label>{% endif %}
+                    {% for key, value in extra_options.items() %}
+                        {% if not ((value is none) or (value is boolean)) %}
+                            <label for="{{key}}">{{key}}</label>
+                            <input type="text" name="{{key}}" id="{{key}}" class="val" value="{{value}}" /><br>
+                        {% endif %}
+                    {% endfor %}
+                    {% set glob={'header_printed': False} %}
+                    {% for key, value in extra_options.items() %}
+                        {% if (value is none) or (value is boolean) %}
+                            {% if not glob.header_printed %}
+                                The following custom parameters can't be set in the Web UI, because it is a boolean or None type:<br>
+                                {% set _ = glob.update({'header_printed':True}) %}
+                            {% endif %}
+                            {{key}}<br>
+                        {% endif %}
+                    {% endfor %}
                     <button type="submit">开始运行</button>
                 </form>
                 <div style="clear:right;"></div>
@@ -120,6 +139,7 @@
                 <li><a href="#" class="chart-tab-link">图表</a></li>
                 <li><a href="#">失败数</a></li>
                 <li><a href="#">错误</a></li>
+                <li><a href="#">任务</a></li>
                 <li><a href="#">下载数据</a></li>
                 {% if is_distributed %}
                     <li><a href="#">工作机</a></li>
@@ -169,17 +189,21 @@
                 <table id="exceptions" class="stats">
                     <thead>
                         <th class="exception_occurrences stats_label">发生</th>
-                        <th class="exception_traceback stats_label">错误信息报告</th>
+                        <th class="exception_traceback stats_label">错误相信报告</th>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
             </div>
+            <div id="tasks" style="display:none;">
+                <p>脚本: <span>{{ locustfile }}</span></p>
+                <div class="tasks" data-tasks="{{tasks}}"></div>
+            </div>
             <div style="display:none;">
                 <div style="margin-top:20px;">
                     <a href="./stats/requests/csv">下载请求统计 CSV</a><br>
                     {% if stats_history_enabled %}
-                        <a href="./stats/requests_full_history/csv">Download full request statistics history CSV</a><br>
+                        <a href="./stats/requests_full_history/csv">下载完整的请求统计历史数据 CSV</a><br>
                     {% endif %}
                     <a href="./stats/failures/csv">下载失败 CSV</a><br>
                     <a href="./exceptions/csv">下载错误 CSV</a><br>
@@ -212,9 +236,9 @@
             <div class="padder">
                 <h1>关于</h1>
                 <p>
-                    Locust最初的想法是Carl Byström的，他在2010年6月进行了第一次概念验证。  
-					Jonatan Heyman在2011年1月接手Locust，实现了Locust类的当前概念  
-					并使其在多台机器上分布工作。
+                    Locust最初的想法是Carl Byström的，他在2010年6月进行了第一次概念验证。
+                    Jonatan Heyman在2011年1月接手Locust，实现了Locust类的当前概念
+                    并使其在多台机器上分布工作。
                 </p>
                 <p>
                     Jonatan, Carl和Joakim Hamrén继续在他们的工作中开发Locust，
@@ -230,7 +254,7 @@
 
 
                 <h1>许可证</h1>
-                在MIT许可下的开源项目.
+                MIT开源软件许可协议.
 
                 <h2>版本 <a href="https://github.com/locustio/locust/releases/tag/{{version}}">{{version}}</a></h2>
                 <br>
@@ -243,8 +267,6 @@
             <a href="#" onclick="$('.about').fadeIn();">关于</a>
         </div>
     </nav>
-
-
     <script type="text/javascript" src="./static/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="./static/jquery.jqote2.min.js"></script>
     <script type="text/javascript" src="./static/jquery.tools.min.js"></script>
@@ -308,6 +330,7 @@
     </script>
     <script type="text/javascript" src="./static/chart.js?v={{ version }}"></script>
     <script type="text/javascript" src="./static/locust.js?v={{ version }}"></script>
+    <script type="text/javascript" src="./static/tasks.js?v={{ version }}"></script>
     {% block extended_script %}
     {% endblock extended_script %}
 </body>
