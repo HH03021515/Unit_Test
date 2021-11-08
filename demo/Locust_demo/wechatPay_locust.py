@@ -5,6 +5,7 @@ import time
 from locust import task, events, TaskSet
 from locust.contrib.fasthttp import FastHttpUser
 
+
 class UserBehavior(TaskSet):
     """Locust任务集，定义每个locust行为"""
 
@@ -50,12 +51,13 @@ class UserBehavior(TaskSet):
             "Content-Type": "application/json",
         }
         payload = {
-        "appId": "wxcc603d9f0d54eaf0", "goodsTag": "", "innerOrderId": "C53129C6-634F-4F27-A0EA-2E9E60341CAF",
-         "openId": "", "payAmount": "11.00", "payBusinessType": "PARKING_TEMP",
-         "senceInfo": "{\"start_time\":\"2021-11-08T11:02:41+08:00\",\"plate_color\":\"BLUE\",\"device_id\":\"724\",\"end_time\":\"2021-11-08T14:05:53+08:00\",\"parking_id\":\"01000076482316363405638875052\",\"charging_duration\":10992,\"plate_number\":\"豫Q59M86\",\"parking_name\":\"李朗国际珠宝产业园\"}",
-         "tradeBizInfo": {"parkingCmbClearing": False, "parkingDirectClearing": False, "parkingId": 724,
-                          "parkingIsWanDa": False}}
+            "appId": "wxcc603d9f0d54eaf0", "goodsTag": "", "innerOrderId": "C53129C6-634F-4F27-A0EA-2E9E60341CAF",
+            "openId": "", "payAmount": "11.00", "payBusinessType": "PARKING_TEMP",
+            "senceInfo": "{\"start_time\":\"2021-11-08T11:02:41+08:00\",\"plate_color\":\"BLUE\",\"device_id\":\"724\",\"end_time\":\"2021-11-08T14:05:53+08:00\",\"parking_id\":\"01000076482316363405638875052\",\"charging_duration\":10992,\"plate_number\":\"豫Q59M86\",\"parking_name\":\"李朗国际珠宝产业园\"}",
+            "tradeBizInfo": {"parkingCmbClearing": False, "parkingDirectClearing": False, "parkingId": 724,
+                             "parkingIsWanDa": False}}
         self.client.post("/paymentRest/crePayOrd4WxWithHoldRecord", json=payload, header=header, name='微信支付分代扣接口')
+
 
 class WebUser(FastHttpUser):
     """性能测试配置"""
