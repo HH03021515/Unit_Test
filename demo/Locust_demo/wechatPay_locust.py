@@ -51,21 +51,32 @@ class UserBehavior(TaskSet):
     @task(1)
     # 修改测试脚本发现单跑微信代扣请求接口会报status code 456的问题，查找外网信息发现是QA服务器nginx配置456限制速度的原因
     # 联系公司运维人员去掉nginx456限速配置，问题解决
+    # def test_paymentRest(self):
+    #     header = {
+    #         "Content-Type": "application/json",
+    #     }
+    #     payload = {
+    #         "appId": "wxcc603d9f0d54eaf0", "goodsTag": "", "innerOrderId": "C53129C6-634F-4F27-A0EA-2E9E60341CAF",
+    #         "openId": "", "payAmount": "11.00", "payBusinessType": "PARKING_TEMP",
+    #         "senceInfo": "{\"start_time\":\"2021-11-08T11:02:41+08:00\",\"plate_color\":\"BLUE\",\"device_id\":\"724\",\"end_time\":\"2021-11-08T14:05:53+08:00\",\"parking_id\":\"01000076482316363405638875052\",\"charging_duration\":10992,\"plate_number\":\"豫Q59M86\",\"parking_name\":\"李朗国际珠宝产业园\"}",
+    #         "tradeBizInfo": {"parkingCmbClearing": False, "parkingDirectClearing": False, "parkingId": 724,
+    #                          "parkingIsWanDa": False}}
+    #     self.client.post("/paymentRest/crePayOrd4WxWithHoldRecord", json=payload, name='微信支付分代扣接口（无结果）')
+
     def test_paymentRest(self):
         header = {
             "Content-Type": "application/json",
         }
         payload = {
-            "appId": "wxcc603d9f0d54eaf0", "goodsTag": "", "innerOrderId": "C53129C6-634F-4F27-A0EA-2E9E60341CAF",
-            "openId": "", "payAmount": "11.00", "payBusinessType": "PARKING_TEMP",
-            "senceInfo": "{\"start_time\":\"2021-11-08T11:02:41+08:00\",\"plate_color\":\"BLUE\",\"device_id\":\"724\",\"end_time\":\"2021-11-08T14:05:53+08:00\",\"parking_id\":\"01000076482316363405638875052\",\"charging_duration\":10992,\"plate_number\":\"豫Q59M86\",\"parking_name\":\"李朗国际珠宝产业园\"}",
-            "tradeBizInfo": {"parkingCmbClearing": False, "parkingDirectClearing": False, "parkingId": 724,
-                             "parkingIsWanDa": False}}
-        self.client.post("/paymentRest/crePayOrd4WxWithHoldRecord", json=payload, name='微信支付分代扣接口')
+            "appId": "wxd4a86d0d56b87fb4", "goodsTag": "", "innerOrderId": "2d5e0710-7b77-4960-9315-09ea47a13174",
+            "openId": "", "payAmount": "0.01", "payBusinessType": "PARKING_TEMP",
+            "senceInfo": "{\"start_time\":\"2021-11-05T10:24:21+08:00\",\"plate_color\":\"BLUE\",\"device_id\":\"1004043\",\"end_time\":\"2021-11-05T10:25:02+08:00\",\"parking_id\":\"01002442857816360790629175595\",\"charging_duration\":41,\"plate_number\":\"赣QG0000\",\"parking_name\":\"lhq测试车场1\"}",
+            "tradeBizInfo": {"parkingCmbClearing": False, "parkingDirectClearing": False, "parkingId": 1004043,
+                             "parkingIsWanDa": False}
+        }
+        self.client.post("/paymentRest/crePayOrd4WxWithHoldRecord", json=payload, name='微信支付分代扣接口（有结果）')
 
 
-
-#
 #
 # class DubboTask(TaskSet):
 #     def on_start(self):
