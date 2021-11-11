@@ -1,10 +1,13 @@
 # 微信支付相关接口压测
 import sys
 import time
+from functools import partial
 
 from icecream import ic
-from locust import task, events, TaskSet
+from locust import task, events, TaskSet, User
 from locust.contrib.fasthttp import FastHttpUser
+
+from demo.Locust_demo.telnet_dubbo import InvokeDubboApi
 
 
 class UserBehavior(TaskSet):
@@ -37,33 +40,34 @@ class UserBehavior(TaskSet):
             )
 
     @task(1)
-    # def test_getqueryPayOrder(self):
-    #     self.client.get(
-    #         "/orderquery/1/queryPayOrder?innerorderid=4A7ED092-E22C-4B2D-9B1A-E2B7290D40FA",
-    #         name='第三方订单查询接口（有结果）')
-
-    # @task(1)
-    # def test_getquertPayOrder_nodata(self):
-    #     self.client.get(
-    #         "/orderquery/1/queryPayOrder?innerorderid=4A7ED092-E22C-4B2D-9B1A-E2B7290D1111",
-    #         name='第三方订单查询接口（无结果）')
+    def test_getqueryPayOrder(self):
+        self.client.get(
+            "/orderquery/1/queryPayOrder?innerorderid=4A7ED092-E22C-4B2D-9B1A-E2B7290D40FA",
+            name='第三方订单查询接口（有结果）')
 
     @task(1)
+    def test_getquertPayOrder_nodata(self):
+        self.client.get(
+            "/orderquery/1/queryPayOrder?innerorderid=4A7ED092-E22C-4B2D-9B1A-E2B7290D1111",
+            name='第三方订单查询接口（无结果）')
+
     # 修改测试脚本发现单跑微信代扣请求接口会报status code 456的问题，查找外网信息发现是QA服务器nginx配置456限制速度的原因
     # 联系公司运维人员去掉nginx456限速配置，问题解决
-    # def test_paymentRest(self):
-    #     header = {
-    #         "Content-Type": "application/json",
-    #     }
-    #     payload = {
-    #         "appId": "wxcc603d9f0d54eaf0", "goodsTag": "", "innerOrderId": "C53129C6-634F-4F27-A0EA-2E9E60341CAF",
-    #         "openId": "", "payAmount": "11.00", "payBusinessType": "PARKING_TEMP",
-    #         "senceInfo": "{\"start_time\":\"2021-11-08T11:02:41+08:00\",\"plate_color\":\"BLUE\",\"device_id\":\"724\",\"end_time\":\"2021-11-08T14:05:53+08:00\",\"parking_id\":\"01000076482316363405638875052\",\"charging_duration\":10992,\"plate_number\":\"豫Q59M86\",\"parking_name\":\"李朗国际珠宝产业园\"}",
-    #         "tradeBizInfo": {"parkingCmbClearing": False, "parkingDirectClearing": False, "parkingId": 724,
-    #                          "parkingIsWanDa": False}}
-    #     self.client.post("/paymentRest/crePayOrd4WxWithHoldRecord", json=payload, name='微信支付分代扣接口（无结果）')
-
+    @task(1)
     def test_paymentRest(self):
+        header = {
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "appId": "wxcc603d9f0d54eaf0", "goodsTag": "", "innerOrderId": "C53129C6-634F-4F27-A0EA-2E9E60341CAF",
+            "openId": "", "payAmount": "11.00", "payBusinessType": "PARKING_TEMP",
+            "senceInfo": "{\"start_time\":\"2021-11-08T11:02:41+08:00\",\"plate_color\":\"BLUE\",\"device_id\":\"724\",\"end_time\":\"2021-11-08T14:05:53+08:00\",\"parking_id\":\"01000076482316363405638875052\",\"charging_duration\":10992,\"plate_number\":\"豫Q59M86\",\"parking_name\":\"李朗国际珠宝产业园\"}",
+            "tradeBizInfo": {"parkingCmbClearing": False, "parkingDirectClearing": False, "parkingId": 724,
+                             "parkingIsWanDa": False}}
+        self.client.post("/paymentRest/crePayOrd4WxWithHoldRecord", json=payload, name='微信支付分代扣接口（无结果）')
+
+    @task(1)
+    def test_paymentRest_result(self):
         header = {
             "Content-Type": "application/json",
         }
@@ -76,8 +80,16 @@ class UserBehavior(TaskSet):
         }
         self.client.post("/paymentRest/crePayOrd4WxWithHoldRecord", json=payload, name='微信支付分代扣接口（有结果）')
 
+class WebUser(FastHttpUser):
+    """性能测试配置"""
 
-#
+    tasks = [UserBehavior]
+    min_wait = 1000
+    max_wait = 3000
+    # host = "http://newpay.qa.etcp.cn/service"
+
+
+# 以下为内部接口调用方式
 # class DubboTask(TaskSet):
 #     def on_start(self):
 #         print("RPC接口压测准备。。。")
@@ -148,14 +160,6 @@ class UserBehavior(TaskSet):
 #         }) as rsp:
 #             if rsp.code:
 #                 rsp.failure(rsp.raw_response)
-
-
-class WebUser(FastHttpUser):
-    """性能测试配置"""
-
-    tasks = [UserBehavior]
-    min_wait = 1000
-    max_wait = 3000
-    # host = "http://newpay.qa.etcp.cn/service"
-
-    # url = {"qa": ("10.103.22.92", 20992)}
+#
+#
+#
