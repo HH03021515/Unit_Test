@@ -42,4 +42,6 @@ class NoobGateway(TaskSet):
 
 class Web_gwp(FastHttpUser):
     tasks = [NoobGateway]
+    min_wait = 1000
+    max_wait = 3000
     host = "http://gw-p.intra.sit.etcp.net"
