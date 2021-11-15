@@ -37,7 +37,7 @@ class NoobGateway(TaskSet):
     @task(1)
     def test_gateway_ok(self):
         self.client.get(
-            "/bsapi2/ok.html", name='ok接口压测')
+            "/opendata/mrg/debug", name='debug接口压测')
 
 
 class Web_gwp(FastHttpUser):
