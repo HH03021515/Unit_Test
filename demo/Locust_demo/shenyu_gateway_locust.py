@@ -2,6 +2,8 @@
 import sys
 import time
 
+# from gevent import monkey
+# monkey.patch_all()
 from locust import task, events, TaskSet
 from locust.contrib.fasthttp import FastHttpUser
 

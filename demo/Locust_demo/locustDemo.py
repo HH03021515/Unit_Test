@@ -40,6 +40,11 @@
 # 五、最终测试结果 服务器配置：CPU 8核 内存16G  承受最大业务量900万次请求数，占用内存12G，占用磁盘空间23G。redis与业务量关系 80万请求数占用1G redis内存
 # 磁盘与业务量关系  80万请求数占用2G 磁盘空间
 
+# 由于IO操作非常耗时，程序经常会处于等待状态,比如请求多个网页有时候需要等待，gevent可以自动切换协程
+# 遇到阻塞自动切换协程，程序启动时执行monkey.patch_all()解决
+# from gevent import monkey
+# monkey.patch_all()
+
 import sys
 import time
 from locust import task, events, TaskSet
