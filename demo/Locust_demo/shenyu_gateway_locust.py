@@ -36,10 +36,15 @@ class NoobGateway(TaskSet):
                 exception=f"Response Code Error! Code:{response.content}"
             )
 
+    # @task(1)
+    # def test_gateway_debug(self):
+    #     self.client.get(
+    #         "/opendata/mrg/debug", name='debug接口压测')
+
     @task(1)
     def test_gateway_ok(self):
         self.client.get(
-            "/opendata/mrg/debug", name='debug接口压测')
+            "/bsapi2/ok.html", name='ok接口压测')
 
 
 class Web_gwp(FastHttpUser):
