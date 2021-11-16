@@ -49,9 +49,13 @@ class NoobGateway(TaskSet):
     @task(1)
     def test_getSwitch(self):
         '''对外网关接口'''
+        header = {
+            # 'Content-Type': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
+            'Accept-Encoding': 'gzip, deflate, br'
+        }
         self.client.get(
-            "/rest/payment/switch/getSwitch", name='网关getSwitch接口压测'
-        )
+            "/rest/payment/switch/getSwitch", name='网关getSwitch接口压测')
 
 
 
