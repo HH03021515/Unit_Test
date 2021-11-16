@@ -53,11 +53,6 @@ class NoobGateway(TaskSet):
             "/rest/payment/switch/getSwitch", name='网关getSwitch接口压测'
         )
 
-    # @task(1)
-    # def test_intra_getSwitch(self):
-    #     self.client.get(
-    #         "/rest/payment/switch/getSwitch", name='内部getSwitch接口'
-    #     )
 
 
 class Web_gwp(FastHttpUser):
