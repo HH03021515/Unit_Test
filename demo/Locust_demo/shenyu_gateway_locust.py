@@ -41,14 +41,28 @@ class NoobGateway(TaskSet):
     #     self.client.get(
     #         "/opendata/mrg/debug", name='debug接口压测')
 
+    # @task(1)
+    # def test_gateway_ok(self):
+    #     self.client.get(
+    #         "/bsapi2/ok.html", name='ok接口压测')
+
     @task(1)
-    def test_gateway_ok(self):
+    def test_getSwitch(self):
+        '''对外网关接口'''
         self.client.get(
-            "/bsapi2/ok.html", name='ok接口压测')
+            "/rest/payment/switch/getSwitch", name='网关getSwitch接口压测'
+        )
+
+    # @task(1)
+    # def test_intra_getSwitch(self):
+    #     self.client.get(
+    #         "/rest/payment/switch/getSwitch", name='内部getSwitch接口'
+    #     )
 
 
 class Web_gwp(FastHttpUser):
     tasks = [NoobGateway]
     min_wait = 1000
     max_wait = 3000
-    host = "http://gw-p.intra.sit.etcp.net"
+    host = "http://gw-p.intra.sit.etcp.net"  # 网关host
+    # host = "http://paymentswitch.intra.uat.etcp.net"  # 内部host
