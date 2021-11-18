@@ -45,7 +45,9 @@ class auth_tokenVerify(TaskSet):
             'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6InAwMDIiLCJmdWxsTmFtZSI6IuadjuaXrSIsImV4cCI6MTYzNzEzNDU4MSwidXVpZCI6ImUzYzk0ZTBjLTVlYWUtNDZkNS05YTc4LThiMmE0MTQzNGE4OCIsInVzZXJJZCI6IjQyMjUiLCJpYXQiOjE2MzcxMzA5ODF9.gRSXs6-ThH7eG1pyGKNdMYzg195UG8dIxpZr4TMg8eA'
         }
         response = self.client.post(
-            "authority/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
+            "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
+        # response = self.client.post(
+        #     "authority/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
         print("Response status code: ", response.status_code)
         print("Response content: ", response.text)
 
@@ -56,7 +58,9 @@ class auth_tokenVerify(TaskSet):
             'token': '111111'
         }
         response_error = self.client.post(
-            "authority/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
+            "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
+        # response_error = self.client.post(
+        #     "authority/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
         print("Response status code: ", response_error.status_code)
         print("Response content: ", response_error.text)
 
@@ -65,5 +69,5 @@ class Web_gwp_tokenVerify(FastHttpUser):
     tasks = [auth_tokenVerify]
     min_wait = 1000
     max_wait = 3000
-    # host = "http://gw-p.intra.sit.etcp.net/"  # 网关host不带业务
-    host = "http://authority.intra.sit.etcp.net/"  # 带业务的
+    host = "http://gw-p.intra.sit.etcp.net/"  # 网关host
+    # host = "http://authority.intra.sit.etcp.net/authority/auth/1/tokenVerify"  # 带业务的
