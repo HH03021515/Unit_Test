@@ -12,21 +12,12 @@ class auth_tokenVerify(TaskSet):
     def on_start(self):
         print('开始压测p平台网关。。。')
 
-    @task
     def get_response(self, response):
         """
         获取返回
         :param response:请求返回对象
         :return:
         """
-        headers = {
-            'Content-Type': 'application/json',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6InAwMDIiLCJmdWxsTmFtZSI6IuadjuaXrSIsImV4cCI6MTYzNzEzNDU4MSwidXVpZCI6ImUzYzk0ZTBjLTVlYWUtNDZkNS05YTc4LThiMmE0MTQzNGE4OCIsInVzZXJJZCI6IjQyMjUiLCJpYXQiOjE2MzcxMzA5ODF9.gRSXs6-ThH7eG1pyGKNdMYzg195UG8dIxpZr4TMg8eA'
-        }
-        body = {
-        }
         start_time = int(time.time())
         if response.status_code == 200:
             events.request_success.fire(
@@ -43,8 +34,6 @@ class auth_tokenVerify(TaskSet):
                 response_length=0,
                 exception=f"Response Code Error! Code:{response.content}"
             )
-        response = self.client.post("/authority/auth/1/tokenVerify", headers=headers, json=body, name='获取响应').text
-        assert '成功' in response
 
     @task(1)
     def test_auth_tokenVerify(self):
@@ -54,9 +43,8 @@ class auth_tokenVerify(TaskSet):
             'Accept-Encoding': 'gzip, deflate, br',
             'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6InAwMDIiLCJmdWxsTmFtZSI6IuadjuaXrSIsImV4cCI6MTYzNzEzNDU4MSwidXVpZCI6ImUzYzk0ZTBjLTVlYWUtNDZkNS05YTc4LThiMmE0MTQzNGE4OCIsInVzZXJJZCI6IjQyMjUiLCJpYXQiOjE2MzcxMzA5ODF9.gRSXs6-ThH7eG1pyGKNdMYzg195UG8dIxpZr4TMg8eA'
         }
-        self.client.get(
-            "/authority/auth/1/tokenVerify", header=header, name='网关鉴权tokenVerify接口').text
-
+        self.client.post(
+            "/authority/auth/1/tokenVerify", header=header, name='网关鉴权tokenVerify接口')
 
     # @task(1)
     # def test_auth_tokenVerify_error(self):
@@ -68,7 +56,6 @@ class auth_tokenVerify(TaskSet):
     #     }
     #     self.client.post(
     #         "/authority/auth/1/tokenVerify", header=header, name='网关鉴权tokenVerify接口（无效token）').text
-
 
 
 class Web_gwp_tokenVerify(FastHttpUser):
