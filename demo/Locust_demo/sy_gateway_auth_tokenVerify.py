@@ -12,6 +12,9 @@ class auth_tokenVerify(TaskSet):
     def on_start(self):
         print('开始压测p平台网关。。。')
 
+    def on_stop(self):
+        print('运行时间：', time.strftime("%Y-%m-%d %H:%M:%S"))
+
     def get_response(self, response):
         """
         获取返回
