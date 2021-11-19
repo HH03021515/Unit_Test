@@ -38,17 +38,15 @@ class auth_tokenVerify(TaskSet):
                 exception=f"Response Code Error! Code:{response.content}"
             )
 
-    @task(1)
+    @task(3)
     def test_auth_tokenVerify(self):
         '''鉴权接口'''
         header = {
-            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6InAwMDIiLCJmdWxsTmFtZSI6IuadjuaXrSIsImV4cCI6MTYzNzEzNDU4MSwidXVpZCI6ImUzYzk0ZTBjLTVlYWUtNDZkNS05YTc4LThiMmE0MTQzNGE4OCIsInVzZXJJZCI6IjQyMjUiLCJpYXQiOjE2MzcxMzA5ODF9.gRSXs6-ThH7eG1pyGKNdMYzg195UG8dIxpZr4TMg8eA'
+            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IldFQlNPUCIsImZ1bGxOYW1lIjoi5p2O5petIiwiZXhwIjoxNjM3MjkyODYyLCJ1dWlkIjoiZTNjOTRlMGMtNWVhZS00NmQ1LTlhNzgtOGIyYTQxNDM0YTg4IiwidXNlcklkIjoiNDIyNSIsImlhdCI6MTYzNzI4OTI2Mn0.BN1eUcjuY1Zk4BFYPrieovCdGYEqDNbi3gUSQwKPDis'
         }
         response = self.client.post(
             "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
-        # response = self.client.post(
-        #     "authority/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
-        print("Response status code: ", response.status_code)
+        # print("Response status code: ", response.status_code)
         print("Response content: ", response.text)
 
     @task(1)
@@ -59,9 +57,7 @@ class auth_tokenVerify(TaskSet):
         }
         response_error = self.client.post(
             "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
-        # response_error = self.client.post(
-        #     "authority/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
-        print("Response status code: ", response_error.status_code)
+        # print("Response status code: ", response_error.status_code)
         print("Response content: ", response_error.text)
 
 
