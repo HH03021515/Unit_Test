@@ -1,4 +1,4 @@
-# sy网关鉴权接口压测
+# 生成有效token，测试接口
 
 import sys
 import time
@@ -11,9 +11,6 @@ class auth_tokenVerify(TaskSet):
 
     def on_start(self):
         print('开始压测p平台网关。。。')
-
-    # def on_stop(self):
-    #     print('运行时间：', time.strftime("%Y-%m-%d %H:%M:%S"))
 
     def get_response(self, response):
         """
@@ -38,32 +35,18 @@ class auth_tokenVerify(TaskSet):
                 exception=f"Response Code Error! Code:{response.content}"
             )
 
-
-    def test_auth_tokenVerify(self):
-        '''鉴权接口'''
-        header = {
-            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IldFQlNPUCIsImZ1bGxOYW1lIjoi5p2O5petIiwiZXhwIjoxNjM3MjkyODYyLCJ1dWlkIjoiZTNjOTRlMGMtNWVhZS00NmQ1LTlhNzgtOGIyYTQxNDM0YTg4IiwidXNlcklkIjoiNDIyNSIsImlhdCI6MTYzNzI4OTI2Mn0.BN1eUcjuY1Zk4BFYPrieovCdGYEqDNbi3gUSQwKPDis'
-        }
+    @task(1)
+    def test_auth_tokenVerify_params(self):
+        '''生成有效token接口'''
+        payload = {"appid": "p001", "userId": 4251}
         response = self.client.post(
-            "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
-        # print("Response status code: ", response.status_code)
+            "authority/auth/1/createValidToken", content_type="application/x-www-form-urlencoded", data=payload,
+            name="获取token")
         print("Response content: ", response.text)
-
-
-    def test_auth_tokenVerify_error(self):
-        '''鉴权接口传无效token'''
-        header = {
-            'token': '111111'
-        }
-        response_error = self.client.post(
-            "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
-        # print("Response status code: ", response_error.status_code)
-        print("Response content: ", response_error.text)
 
 
 class Web_gwp_tokenVerify(FastHttpUser):
     tasks = [auth_tokenVerify]
     min_wait = 1000
     max_wait = 3000
-    host = "http://gw-p.intra.sit.etcp.net/"  # 网关host
-    # host = "http://authority.intra.sit.etcp.net/"  # 带业务的
+    host = "http://authority.intra.sit.etcp.net/"
