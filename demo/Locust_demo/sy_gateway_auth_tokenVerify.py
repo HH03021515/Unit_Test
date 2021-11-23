@@ -52,8 +52,7 @@ class auth_tokenVerify(TaskSet):
         response = self.client.post(
             "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
         # response = self.client.post(
-        #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(有业务)'
-        # )
+        #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(有业务)')
         if response.status_code != 200:
             print("Response error: ", response.text)
         else:
@@ -69,7 +68,6 @@ class auth_tokenVerify(TaskSet):
             "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
         # response_error = self.client.post(
         #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(无效token)'
-        # print("Response status code: ", response_error.status_code)
         if response_error.status_code != 200:
             print("Response error: ", response_error.text)
         else:
