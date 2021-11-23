@@ -38,7 +38,12 @@ class auth_tokenVerify(TaskSet):
                 exception=f"Response Code Error! Code:{response.content}"
             )
 
+    # @task(1)
+    # def ok_html(self):
+    #     res = self.client.get("/ok.html", name='ok接口' )
+    #     print("res: ", res.text)
 
+    @task(3)
     def test_auth_tokenVerify(self):
         '''鉴权接口'''
         header = {
@@ -46,10 +51,15 @@ class auth_tokenVerify(TaskSet):
         }
         response = self.client.post(
             "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
-        # print("Response status code: ", response.status_code)
-        print("Response content: ", response.text)
+        # response = self.client.post(
+        #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(有业务)'
+        # )
+        if response.status_code != 200:
+            print("Response error: ", response.text)
+        else:
+            pass
 
-
+    @task(1)
     def test_auth_tokenVerify_error(self):
         '''鉴权接口传无效token'''
         header = {
@@ -57,8 +67,13 @@ class auth_tokenVerify(TaskSet):
         }
         response_error = self.client.post(
             "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
+        # response_error = self.client.post(
+        #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(无效token)'
         # print("Response status code: ", response_error.status_code)
-        print("Response content: ", response_error.text)
+        if response_error.status_code != 200:
+            print("Response error: ", response_error.text)
+        else:
+            pass
 
 
 class Web_gwp_tokenVerify(FastHttpUser):
