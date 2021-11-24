@@ -35,18 +35,45 @@ class User_Service(TaskSet):
                 exception=f"Response Code Error! Code:{response.content}"
             )
 
-    @task(9)
+    @task(7)
     def user_service(self):
         '''用户信息查询接口'''
         header = {
             "tenantId": 2021110300001,
         }
-        data = {
-            "userId": 19146961,
-            "phoneNumber": 13718415257
+        res = self.client.get(
+            'user/v1/query?userId=19146961&phoneNumber=13718415257', headers=header, name='用户信息查询接口（有数据）')
+        if res.status_code != 200:
+            print('Response error message is: ', res.text)
+        else:
+            pass
+
+    @task(1)
+    def user_service_nodata(self):
+        '''用户信息查询接口'''
+        header = {
+            "tenantId": 2021110300001,
         }
-        res = self.client.get('user/v1/infoChange', headers=header, json=data, name='用户信息查询接口（有数据）')
-        print('Response message is: ', res.text)
+        res = self.client.get(
+            'user/v1/query?userId=0&phoneNumber=0', headers=header, name='用户信息查询接口（无数据）')
+        if res.status_code != 200:
+            print('Response error message is: ', res.text)
+        else:
+            pass
+
+    @task(2)
+    def userInfo_edit(self):
+        '''用户信息修改接口'''
+        header = {
+            "tenantId": 2021110300001,
+        }
+        res = self.client.post(
+            'user/v1/infoChange', headers=header, name='用户信息修改接口（有数据）')
+        if res.status_code != 200:
+            print('Response error message is: ', res.text)
+        else:
+            pass
+
 
 class Web_User_Service(FastHttpUser):
     tasks = [User_Service]
