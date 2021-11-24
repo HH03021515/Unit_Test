@@ -43,35 +43,42 @@ class auth_tokenVerify(TaskSet):
     #     res = self.client.get("/ok.html", name='ok接口' )
     #     print("res: ", res.text)
 
-    @task(3)
-    def test_auth_tokenVerify(self):
-        '''鉴权接口'''
-        header = {
-            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IldFQlNPUCIsImZ1bGxOYW1lIjoi5p2O5petIiwiZXhwIjoxNjM3MjkyODYyLCJ1dWlkIjoiZTNjOTRlMGMtNWVhZS00NmQ1LTlhNzgtOGIyYTQxNDM0YTg4IiwidXNlcklkIjoiNDIyNSIsImlhdCI6MTYzNzI4OTI2Mn0.BN1eUcjuY1Zk4BFYPrieovCdGYEqDNbi3gUSQwKPDis'
-        }
-        response = self.client.post(
-            "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
-        # response = self.client.post(
-        #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(有业务)')
-        if response.status_code != 200:
-            print("Response error: ", response.text)
-        else:
-            pass
+    # @task(3)
+    # def test_auth_tokenVerify(self):
+    #     '''鉴权接口'''
+    #     header = {
+    #         'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IldFQlNPUCIsImZ1bGxOYW1lIjoi5p2O5petIiwiZXhwIjoxNjM3MjkyODYyLCJ1dWlkIjoiZTNjOTRlMGMtNWVhZS00NmQ1LTlhNzgtOGIyYTQxNDM0YTg4IiwidXNlcklkIjoiNDIyNSIsImlhdCI6MTYzNzI4OTI2Mn0.BN1eUcjuY1Zk4BFYPrieovCdGYEqDNbi3gUSQwKPDis'
+    #     }
+    #     response = self.client.post(
+    #         "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
+    #     # response = self.client.post(
+    #     #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(有业务)')
+    #     if response.status_code != 200:
+    #         print("Response error: ", response.text)
+    #     else:
+    #         pass
+    #
+    # @task(1)
+    # def test_auth_tokenVerify_error(self):
+    #     '''鉴权接口传无效token'''
+    #     header = {
+    #         'token': '111111'
+    #     }
+    #     response_error = self.client.post(
+    #         "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
+    #     # response_error = self.client.post(
+    #     #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(无效token)'
+    #     if response_error.status_code != 200:
+    #         print("Response error: ", response_error.text)
+    #     else:
+    #         pass
 
     @task(1)
-    def test_auth_tokenVerify_error(self):
-        '''鉴权接口传无效token'''
-        header = {
-            'token': '111111'
-        }
-        response_error = self.client.post(
-            "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口（无效token）')
-        # response_error = self.client.post(
-        #     "/authority/auth/1/tokenVerify", headers=header, name='鉴权tokenVerify接口(无效token)'
-        if response_error.status_code != 200:
-            print("Response error: ", response_error.text)
-        else:
-            pass
+    def test_test(self):
+
+        self.client.post(
+            "/1/1/token", name='纯网关压力')
+
 
 
 class Web_gwp_tokenVerify(FastHttpUser):
