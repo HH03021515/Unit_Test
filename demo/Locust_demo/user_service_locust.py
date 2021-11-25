@@ -1,9 +1,6 @@
 # 用户服务的查询及修改信息接口压测脚本
 
-import sys
-import time
-
-from locust import task, events, TaskSet
+from locust import task, TaskSet
 from locust.contrib.fasthttp import FastHttpUser
 
 
@@ -11,29 +8,6 @@ class User_Service(TaskSet):
 
     def on_start(self):
         print('开始压测p平台网关。。。')
-
-    def get_response(self, response):
-        """
-        获取返回
-        :param response:请求返回对象
-        :return:
-        """
-        start_time = int(time.time())
-        if response.status_code == 200:
-            events.request_success.fire(
-                request_type="recv",
-                name=sys._getframe().f_code.co_name,
-                response_time=int(time.time() - start_time) * 1000,
-                response_length=0
-            )
-        else:
-            events.request_failure.fire(
-                request_type="recv",
-                name=sys._getframe().f_code.co_name,
-                response_time=int(time.time() - start_time) * 1000,
-                response_length=0,
-                exception=f"Response Code Error! Code:{response.content}"
-            )
 
     @task(7)
     def user_service(self):
