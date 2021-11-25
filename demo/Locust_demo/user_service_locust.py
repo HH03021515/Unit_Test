@@ -61,14 +61,35 @@ class User_Service(TaskSet):
         else:
             pass
 
-    @task(2)
+    @task(1)
     def userInfo_edit(self):
         '''用户信息修改接口'''
         header = {
             "tenantId": 2021110300001,
         }
+        payload = {
+            "phoneNumber": "13718415257",
+            "sex": "MALE",
+            "userId": 19146961
+        }
         res = self.client.post(
-            'user/v1/infoChange', headers=header, name='用户信息修改接口（有数据）')
+            'user/v1/infoChange', headers=header, json=payload, name='用户信息修改接口（有数据）')
+        if res.status_code != 200:
+            print('Response error message is: ', res.text)
+        else:
+            pass
+
+    @task(1)
+    def userInfo_edit_nodata(self):
+        '''用户信息修改接口'''
+        header = {
+            "tenantId": 2021110300001,
+        }
+        payload = {
+            "phoneNumber": "13718415257",
+        }
+        res = self.client.post(
+            'user/v1/infoChange', headers=header, json=payload, name='用户信息修改接口（无数据）')
         if res.status_code != 200:
             print('Response error message is: ', res.text)
         else:
