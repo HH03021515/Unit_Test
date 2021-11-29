@@ -47,7 +47,7 @@ class auth_tokenVerify(TaskSet):
     def test_auth_tokenVerify(self):
         '''鉴权接口'''
         header = {
-            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImV0Y3AtcCIsImZ1bGxOYW1lIjoi55Sz5a6HIiwiZXhwIjoxNjM3ODk2MjIzLCJ1dWlkIjoiMzE1OTE3M2QtMmQxYy00NTliLWI0MmMtZTYzM2NiYzY5MWNlIiwidXNlcklkIjoiNDI1MSIsImlhdCI6MTYzNzg5MjYyM30.nRbfo3Ib-aqd2lSEFgegq1u51By3j-V6PUKe3pRraRo'
+            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImV0Y3AtcCIsImZ1bGxOYW1lIjoi55Sz5a6HIiwiZXhwIjoxNjM4MTczODMxLCJ1dWlkIjoiZDcxYWY1ZjYtNWM3MS00YjE4LTk3NDItZmU2MTJlOWJiY2ZkIiwidXNlcklkIjoiNDI1MSIsImlhdCI6MTYzODE3MDIzMX0.y3N-kgtczjAwFDm4J23x020v0BEQnmmOVeVaJCrAzeQ'
         }
         response = self.client.post(
             "auth/auth/1/tokenVerify", headers=header, name='网关鉴权tokenVerify接口')
