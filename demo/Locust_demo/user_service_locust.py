@@ -114,10 +114,11 @@ class User_Service(TaskSet):
         res = self.client.get(
             'user/v1/query?userId=' + str(random.choice(userId)) + '&phoneNumber=' + str(random.choice(phoneNumber)),
             headers=header, name='用户信息查询接口（有数据）')
-        if res.status_code != 200:
-            print('Response error message is: ', res.text)
-        else:
-            pass
+        print(res.text)
+        # if res.status_code != 200:
+        #     print('Response error message is: ', res.text)
+        # else:
+        #     pass
 
     @task(1)
     def user_service_nodata(self):
