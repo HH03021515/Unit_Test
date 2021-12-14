@@ -41381,3 +41381,6 @@ Traceback (most recent call last):
 AttributeError: 'FastResponse' object has no attribute 'failure'
 
 [2021-12-14 19:06:47,452] LAPTOP-4A93SO21/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-locust-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2021-12-14 19:11:55,126] LAPTOP-4A93SO21/INFO/locust.main: Running teardowns...
+[2021-12-14 19:11:55,127] LAPTOP-4A93SO21/INFO/locust.main: Shutting down (exit code 1), bye.
+[2021-12-14 19:11:55,127] LAPTOP-4A93SO21/INFO/locust.main: Cleaning up runner...

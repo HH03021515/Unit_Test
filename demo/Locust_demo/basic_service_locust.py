@@ -1,6 +1,7 @@
 # 基础服务的根据ID查询车场信息及根据oid查询区域信息接口压测脚本
-import random
 import logging as log
+import random
+
 from locust import task, TaskSet
 from locust.contrib.fasthttp import FastHttpUser
 
