@@ -1,6 +1,6 @@
 # 基础服务的根据ID查询车场信息及根据oid查询区域信息接口压测脚本
 import random
-
+import logging as log
 from locust import task, TaskSet
 from locust.contrib.fasthttp import FastHttpUser
 
@@ -35,7 +35,9 @@ class Basic_Service(TaskSet):
         res = self.client.get(
             "base/parking/selectById?id=" + str(random.choice(id)), name="根据ID查询车场信息——合法数据")
         if res.status_code != 200:
-            print("Response error message is: ", res.text)
+            res.failure("There maybe some issues in the resquests. ")
+            # print("Response error message is: ", res.text)
+            log.error("请求执行有错误")
         else:
             pass
 
@@ -64,7 +66,9 @@ class Basic_Service(TaskSet):
         res = self.client.get(
             "base/parking/selectById?id=" + str(random.choice(id)), name='根据ID查询车场信息——不合法数据')
         if res.status_code != 200:
-            print("Response error message is: ", res.text)
+            res.failure("There maybe some issues in the resquests. ")
+            # print("Response error message is: ", res.text)
+            log.error("请求执行有错误")
         else:
             pass
 
@@ -89,7 +93,9 @@ class Basic_Service(TaskSet):
         res = self.client.get(
             "base/administrative/region/searchByOid?oid=" + str(random.choice(oid)), name='根据oid查询区域信息-合法数据')
         if res.status_code != 200:
-            print("Response error message is: ", res.text)
+            res.failure("There maybe some issues in the resquests. ")
+            # print("Response error message is: ", res.text)
+            log.error("请求执行有错误")
         else:
             pass
 
@@ -116,7 +122,9 @@ class Basic_Service(TaskSet):
         res = self.client.get(
             "base/administrative/region/searchByOid?oid=" + str(random.choice(oid)), name='根据oid查询区域信息-错误数据')
         if res.status_code != 200:
-            print("Response error message is: ", res.text)
+            res.failure("There maybe some issues in the resquests. ")
+            # print("Response error message is: ", res.text)
+            log.error("请求执行有错误")
         else:
             pass
 
