@@ -1,5 +1,6 @@
 # 停车记录重构接口压测脚本
 import random
+from urllib.parse import quote
 
 import numpy as np
 import pandas as pd
@@ -18,8 +19,10 @@ class Parking_Record(TaskSet):
     @task(7)
     def search_carin(self):
         '''查询在场车停车记录-在场'''
+        # 取数据时需要在data数组里指定[0]列，且由于车牌有中文，需要经过quote方法转码
         res = self.client.get(
-            "carin/searchCarin?color=&plateNumber=" + str(random.choice(Parking_Record.data)[0]), name='查询在场车停车记录')
+            "carin/searchCarin?color=&plateNumber=" + quote(str(random.choice(Parking_Record.data)[0]),
+                                                            encoding='UTF-8'), name='查询在场车停车记录')
         if res.status_code != 200:
             print("请求报错了啊，错误信息：", res.text)
         else:
