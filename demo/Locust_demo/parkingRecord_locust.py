@@ -1,8 +1,8 @@
 # 停车记录重构接口压测脚本
-import urllib
+import random
+
 import numpy as np
 import pandas as pd
-import random
 from locust import task, TaskSet
 from locust.contrib.fasthttp import FastHttpUser
 
