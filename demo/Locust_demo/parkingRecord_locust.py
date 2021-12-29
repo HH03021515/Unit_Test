@@ -28,6 +28,16 @@ class Parking_Record(TaskSet):
         else:
             pass
 
+    @task(1)
+    def search_carin_nodata(self):
+        '''查询在场车停车记录-不在场'''
+        res = self.client.get(
+            "carin/searchCarin?color=&plateNumber=Q6QD17", name='查询不在场车停车记录')
+        if res.status_code != 200:
+            print("请求报错了啊，错误信息：", res.text)
+        else:
+            pass
+
 
 class Parking_Record_Test(FastHttpUser):
     tasks = [Parking_Record]
