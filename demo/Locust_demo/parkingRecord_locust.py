@@ -38,6 +38,10 @@ class Parking_Record(TaskSet):
         else:
             pass
 
+    def on_stop(self):
+        '''在停止时运行'''
+        print("压测已结束，请记得下载report")
+
 
 class Parking_Record_Test(FastHttpUser):
     tasks = [Parking_Record]
