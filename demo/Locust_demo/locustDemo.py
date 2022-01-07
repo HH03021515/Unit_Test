@@ -45,6 +45,10 @@
 # from gevent import monkey
 # monkey.patch_all()
 
+# 2022-1-7更新：
+# locust在点击stop按钮结束运行时，有时会有请求丢失的情况，导致统计数据与实际请求数据不一致问题，
+# 经询问locust官方确定，需要在执行运行客户端命令时增加 --stop-timeout 10 停止参数，给与locust收集统计数据时间
+
 import sys
 import time
 from locust import task, events, TaskSet
