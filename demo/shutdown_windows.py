@@ -23,3 +23,16 @@ def pageShow(self, page):
     self.time.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
     # 设置日期可使用日历插件
     self.time.setCalendarPopup(True)
+    # 根据PyQt方法获取系统当前时间
+    now = QtCore.QDateTime.currentDateTime()
+    now_time = now.toString(QtCore.Qt.ISODate)
+    # 将当前系统时间复制给时间框中
+    now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    self.time.setDateTime(QtCore.QDateTime.fromString(now_time, 'yyyy-MM-dd hh:mm:ss'))
+    # 一个按钮并设置添加单击事件
+    self.btn = QtWidgets.QPushButton(page, clicked=self.shut)
+    # self.btn.clicked.connect(self.shut(page))
+    self.btn.setToolTip("提交按钮")
+
+
+
