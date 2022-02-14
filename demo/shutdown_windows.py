@@ -33,6 +33,23 @@ def pageShow(self, page):
     self.btn = QtWidgets.QPushButton(page, clicked=self.shut)
     # self.btn.clicked.connect(self.shut(page))
     self.btn.setToolTip("提交按钮")
+    self.btn.move(110, 110)
+
+    self.btn1 = QtWidgets.QPushButton(page, clicked=self.cleart)
+    self.btn1.setToolTip('这是清除任务按钮')
+    self.btn1.move(210, 110)
+    self.text = QtWidgets.QLabel(page)
+    self.text.setGeometry(QtCore.QRect(25, 150, 350, 25))
+    self.text.setFont(QtGui.QFont("Roman times", 14, QtGui.QFont.Bold))
+
+    self.setUi(page)
+    page.show()
+
+def setUi(self, page):
+
+    _translate = QtCore.QCoreApplication.translate
+
+
 
 
 
