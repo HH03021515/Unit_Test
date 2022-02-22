@@ -8,3 +8,4 @@ sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, remark
 cursor.execute(sql)
 data = cursor.fetchall()
 print(data)
+db.close()
