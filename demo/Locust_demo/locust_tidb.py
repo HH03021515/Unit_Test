@@ -738,7 +738,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql4(self):
         """普通索引多条件查询"""
         try:
-            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, update_time, is_finish FROM parking_record WHERE entrance_time > '2021-01-01' AND is_finish = 1;"
+            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, update_time, is_finish FROM parking_record WHERE entrance_time > '2021-01-01' AND is_finish = 1 AND plate_number = '%s';" % str(
+                random.choice(TidbTaskSet.sql_plateNumber))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -767,7 +768,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql6(self):
         """唯一索引查询"""
         try:
-            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE id > 8070450532991188087;"
+            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE synid = '%s';" % str(
+                random.choice(TidbTaskSet.sql_synid))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -781,7 +783,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql7(self):
         """唯一索引+普通索引多条件查询"""
         try:
-            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE id > 8070450532991188087 AND is_finish = 0 AND entrance_time > '2020-01-01';"
+            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE synid = '%s' AND is_finish = 0 AND entrance_time > '2020-01-01';" % str(
+                random.choice(TidbTaskSet.sql_synid))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -793,10 +796,10 @@ class TidbTaskSet(TaskSet):
 
     @task
     def execute_sql8(self):
-        """唯一索引+唯一索引查询"""
+        """普通索引+唯一索引查询"""
         try:
-            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE id = 8070450532770975553 AND synid = '%s';" % str(
-                random.choice(TidbTaskSet.sql_synid))
+            sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE plate_number = '%s' AND synid = '%s';" % (
+                str(random.choice(TidbTaskSet.sql_plateNumber)), str(random.choice(TidbTaskSet.sql_synid)))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -840,7 +843,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql11(self):
         """唯一索引联表查询"""
         try:
-            sql = "SELECT parkingid, platenumber, exitparkingboxid, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, pam2 FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.`synid` WHERE updatetime > '2021-01-01' AND receivablefee = 0.00 AND actualfee = 0.00;"
+            sql = "SELECT parkingid, platenumber, exitparkingboxid, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, pam2 FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.`synid` WHERE updatetime > '2021-01-01' AND receivablefee = 0.00 AND actualfee = 0.00 AND c.`synid` = '%s';" % str(
+                random.choice(TidbTaskSet.sql_synid))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -868,7 +872,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql13(self):
         """普通索引内联查询"""
         try:
-            sql = "SELECT parkingid, platenumber, exitparkingboxid, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, pam2 FROM caroutpayment c INNER JOIN parking_record p ON c.`platenumber` = p.`plate_number` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01;"
+            sql = "SELECT parkingid, platenumber, exitparkingboxid, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, pam2 FROM caroutpayment c INNER JOIN parking_record p ON c.`platenumber` = p.`plate_number` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01 AND c.`platenumber` = '%s';" % str(
+                random.choice(TidbTaskSet.sql_plateNumber))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -882,7 +887,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql14(self):
         """唯一索引联表查询"""
         try:
-            sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.synid WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01;"
+            sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.synid WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01 AND c.`synid` = '%s';" % str(
+                random.choice(TidbTaskSet.sql_synid))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -896,7 +902,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql15(self):
         """普通索引联表查询"""
         try:
-            sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c INNER JOIN parking_record p ON c.`entrancetime` = p.`entrance_time` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01;"
+            sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c INNER JOIN parking_record p ON c.`entrancetime` = p.`entrance_time` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01 AND c.`platenumber` = '%s';" % str(
+                random.choice(TidbTaskSet.sql_plateNumber))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -910,7 +917,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql16(self):
         """唯一+普通索引联表查询"""
         try:
-            sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.`entrance_time` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.00;"
+            sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.`entrance_time` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.00 and c.synid = '%s';" % str(
+                random.choice(TidbTaskSet.sql_synid))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
@@ -924,7 +932,8 @@ class TidbTaskSet(TaskSet):
     def execute_sql17(self):
         """分页普通索引联表查询"""
         try:
-            sql = "SELECT row_number() over (ORDER BY receivablefee DESC) row_num, receivablefee FROM caroutpayment c LEFT JOIN parking_record p ON c.`receivablefee` = p.`receivable_fee` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01 ;"
+            sql = "SELECT row_number() over (ORDER BY plate_number DESC) row_num, platenumber FROM caroutpayment c LEFT JOIN parking_record p ON c.`platenumber` = p.`plate_number` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01 AND c.synid = '%s';" % str(
+                random.choice(TidbTaskSet.sql_synid))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
