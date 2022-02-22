@@ -683,7 +683,7 @@ class TidbTaskSet(TaskSet):
         self.cursor = db.cursor()
 
     def on_stop(self):
-
+        self.cursor.close()
         print("------ Test over ------")  # 执行完测试任务后运行一次
 
     @task
