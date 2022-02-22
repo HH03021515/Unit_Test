@@ -677,9 +677,10 @@ class TidbTaskSet(TaskSet):
 
     def on_start(self):
 
-        self.cursor = pymysql.connect(
+        db = pymysql.connect(
             host='tidb.uat.etcp.net', port=5000, user='parking_dev', password='fTg1DIUKb81#tP3#', db='parking'
         )
+        self.cursor = db.cursor()
 
     def on_stop(self):
 
@@ -694,10 +695,10 @@ class TidbTaskSet(TaskSet):
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee FROM parking_record WHERE plate_number = '%s';" % str(
                 random.choice(TidbTaskSet.sql_plateNumber))
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -709,10 +710,10 @@ class TidbTaskSet(TaskSet):
         try:
             sql = "SELECT COUNT(1) FROM parking_record WHERE plate_number = '%s';" % str(
                 random.choice(TidbTaskSet.sql_plateNumber))
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -724,10 +725,10 @@ class TidbTaskSet(TaskSet):
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, update_time FROM parking_record WHERE plate_number = '%s' ORDER BY update_time DESC LIMIT 100;" % str(
                 random.choice(TidbTaskSet.sql_plateNumber))
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -738,10 +739,10 @@ class TidbTaskSet(TaskSet):
         """普通索引多条件查询"""
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, update_time, is_finish FROM parking_record WHERE entrance_time > '2021-01-01' AND is_finish = 1;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -753,10 +754,10 @@ class TidbTaskSet(TaskSet):
         try:
             sql = "SELECT is_finish, SUM(receivable_fee) AS receivable_fee FROM parking_record WHERE synid = '%s' AND `status` = 1;" % str(
                 random.choice(TidbTaskSet.sql_synid))
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -767,10 +768,10 @@ class TidbTaskSet(TaskSet):
         """唯一索引查询"""
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE id > 8070450532991188087;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -781,10 +782,10 @@ class TidbTaskSet(TaskSet):
         """唯一索引+普通索引多条件查询"""
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE id > 8070450532991188087 AND is_finish = 0 AND entrance_time > '2020-01-01';"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -796,10 +797,10 @@ class TidbTaskSet(TaskSet):
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE id = 8070450532770975553 AND synid = '%s';" % str(
                 random.choice(TidbTaskSet.sql_synid))
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -811,10 +812,10 @@ class TidbTaskSet(TaskSet):
         try:
             sql = "SELECT SUM(receivable_fee) AS total_receivable_fee, SUM(actual_fee) AS total_actual_fee, SUM(online_fee) AS total_online_fee FROM parking_record WHERE plate_number = '%s' AND `status` = 1;" % str(
                 random.choice(TidbTaskSet.sql_plateNumber))
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -826,10 +827,10 @@ class TidbTaskSet(TaskSet):
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, actual_fee, online_fee,update_time, is_finish, `status` FROM parking_record WHERE plate_number = '%s' AND entrance_car_plate_color = 1 AND entrance_time > '2019-01-01' AND exit_time < '2022-02-15';" % str(
                 random.choice(TidbTaskSet.sql_plateNumber))
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -840,10 +841,10 @@ class TidbTaskSet(TaskSet):
         """唯一索引联表查询"""
         try:
             sql = "SELECT parkingid, platenumber, exitparkingboxid, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, pam2 FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.`synid` WHERE updatetime > '2021-01-01' AND receivablefee = 0.00 AND actualfee = 0.00;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -854,10 +855,10 @@ class TidbTaskSet(TaskSet):
         """普通索引左联查询，左表小"""
         try:
             sql = "SELECT table_name, `data`, retry_times, create_time, upload_id, record_type, card_car_id,entrance_time, exit_time FROM syn_fail_data s LEFT JOIN parking_record p ON s.create_time = p.entrance_time WHERE create_time > '2021-01-01';"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -868,10 +869,10 @@ class TidbTaskSet(TaskSet):
         """普通索引内联查询"""
         try:
             sql = "SELECT parkingid, platenumber, exitparkingboxid, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, pam2 FROM caroutpayment c INNER JOIN parking_record p ON c.`platenumber` = p.`plate_number` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -882,10 +883,10 @@ class TidbTaskSet(TaskSet):
         """唯一索引联表查询"""
         try:
             sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.synid WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -896,10 +897,10 @@ class TidbTaskSet(TaskSet):
         """普通索引联表查询"""
         try:
             sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c INNER JOIN parking_record p ON c.`entrancetime` = p.`entrance_time` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -910,10 +911,10 @@ class TidbTaskSet(TaskSet):
         """唯一+普通索引联表查询"""
         try:
             sql = "SELECT parkingid, platenumber, entrancetime, exittime, updatetime, receivablefee, actualfee, onlinefee, couponfee, centerfee, cardfee, buscardfee, pam2, entranceroadname, exitroadname, realname, cartypename, exitparkingboxname FROM caroutpayment c LEFT JOIN parking_record p ON c.`synid` = p.`entrance_time` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.00;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -924,17 +925,17 @@ class TidbTaskSet(TaskSet):
         """分页普通索引联表查询"""
         try:
             sql = "SELECT row_number() over (ORDER BY receivablefee DESC) row_num, receivablefee FROM caroutpayment c LEFT JOIN parking_record p ON c.`receivablefee` = p.`receivable_fee` WHERE entrancetime > '2019-01-01' AND receivablefee != 0.00 AND actualfee = 0.01 ;"
-            self.client.execute(sql)
-            res = self.client.fetchall()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
             print(res)
-            self.client.close()
+            self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
             print("Pass")
 
 
-class Tidb_Run_Set(FastHttpUser):
+class Tidb_Run_Set(User):
     tasks = [TidbTaskSet]
     min_wait = 1000
     max_wait = 3000
