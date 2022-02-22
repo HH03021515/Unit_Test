@@ -938,5 +938,5 @@ class TidbTaskSet(TaskSet):
 class Tidb_Run_Set(User):
     tasks = [TidbTaskSet]
     min_wait = 1000
-    max_wait = 3000
+    max_wait = 30000
     host = 'tidb.uat.etcp.net'
