@@ -698,7 +698,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -713,7 +713,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -728,7 +728,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -742,7 +742,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -757,7 +757,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -771,7 +771,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -785,7 +785,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -800,7 +800,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -815,7 +815,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -830,7 +830,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -844,7 +844,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -858,7 +858,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -872,7 +872,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -886,7 +886,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -900,7 +900,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -914,7 +914,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
@@ -928,7 +928,7 @@ class TidbTaskSet(TaskSet):
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
-            self.cursor.close()
+            # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
