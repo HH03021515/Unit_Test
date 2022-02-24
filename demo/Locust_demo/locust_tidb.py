@@ -686,7 +686,7 @@ class TidbTaskSet(TaskSet):
         self.cursor.close()
         print("------ Test over ------")  # 执行完测试任务后运行一次
 
-    @task()
+    @task(1)
     def execute_sql1(self):
         """普通索引查询"""
         # self.cursor = pymysql.connect(
@@ -704,7 +704,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql2(self):
         """普通索引查询"""
         try:
@@ -719,7 +719,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql3(self):
         """普通索引查询降序100条"""
         try:
@@ -734,7 +734,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql4(self):
         """普通索引多条件查询"""
         try:
@@ -749,7 +749,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql5(self):
         """唯一索引多条件查询"""
         try:
@@ -764,7 +764,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql6(self):
         """唯一索引查询"""
         try:
@@ -779,7 +779,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql7(self):
         """唯一索引+普通索引多条件查询"""
         try:
@@ -794,7 +794,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql8(self):
         """普通索引+唯一索引查询"""
         try:
@@ -809,7 +809,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql9(self):
         """普通索引查询"""
         try:
@@ -824,7 +824,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql10(self):
         """普通索引查询"""
         try:
@@ -839,7 +839,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql11(self):
         """唯一索引联表查询"""
         try:
@@ -854,7 +854,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql12(self):
         """普通索引左联查询，左表小"""
         try:
@@ -868,7 +868,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql13(self):
         """普通索引内联查询"""
         try:
@@ -883,7 +883,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql14(self):
         """唯一索引联表查询"""
         try:
@@ -898,7 +898,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql15(self):
         """普通索引联表查询"""
         try:
@@ -913,7 +913,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql16(self):
         """唯一+普通索引联表查询"""
         try:
@@ -928,7 +928,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task()
+    @task(1)
     def execute_sql17(self):
         """分页普通索引联表查询"""
         try:
