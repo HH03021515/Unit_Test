@@ -835,7 +835,7 @@ class TidbTaskSet(TaskSet):
         self.cursor.close()
         print("------ Test over ------")  # 执行完测试任务后运行一次
 
-    @task(50)
+    # @task(50)
     def execute_sql1(self):
         """普通索引查询"""
         try:
@@ -850,7 +850,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql2(self):
         """普通索引查询"""
         try:
@@ -865,7 +865,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(50)
+    # @task(50)
     def execute_sql3(self):
         """普通索引查询降序100条"""
         try:
@@ -886,7 +886,7 @@ class TidbTaskSet(TaskSet):
         """普通索引多条件查询"""
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, update_time, is_finish FROM " \
-                  "parking_record WHERE entrance_time > '2021-01-01' AND is_finish = 1 AND plate_number = '%s';" \
+                  "parking_record WHERE entrance_time = '2021-01-01' AND is_finish = 1 AND plate_number = '%s';" \
                   % str(random.choice(TidbTaskSet.sql_plateNumber))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
@@ -897,7 +897,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(50)
+    # @task(50)
     def execute_sql5(self):
         """普通索引多条件查询"""
         try:
@@ -912,7 +912,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(50)
+    # @task(50)
     def execute_sql6(self):
         """唯一索引查询"""
         try:
@@ -928,7 +928,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql7(self):
         """唯一索引多条件查询"""
         try:
@@ -944,7 +944,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql8(self):
         """唯一索引查询"""
         try:
@@ -960,7 +960,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql9(self):
         """普通索引查询"""
         try:
@@ -976,7 +976,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql10(self):
         """普通索引查询"""
         try:
@@ -993,7 +993,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql11(self):
         """唯一索引联表查询"""
         try:
@@ -1010,7 +1010,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(10)
+    # @task(10)
     def execute_sql12(self):
         """普通索引内联查询"""
         try:
@@ -1028,7 +1028,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(50)
+    # @task(50)
     def execute_sql13(self):
         """唯一索引联表查询"""
         try:
@@ -1046,7 +1046,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql14(self):
         """分页普通索引联表查询"""
         try:
@@ -1063,12 +1063,12 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql15(self):
         """查询parking_id普通索引联表查询"""
         try:
             sql = "SELECT c.`platenumber` FROM caroutpayment c LEFT JOIN parking_record p ON c.`platenumber` = p.`plate_number` " \
-                  "WHERE c.`parkingid` = %s AND p.`area_id` AND p.`state` = 0 AND p.`status` < 3 GROUP BY c.`platenumber`;" \
+                  "WHERE c.`parkingid` = %s AND p.`area_id` AND p.`state` = 0 AND p.`status` < 3 AND p.entrance_time = '2022-08-04' GROUP BY c.`platenumber`;" \
                   % (random.choice(TidbTaskSet.sql_parkingid))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
@@ -1079,7 +1079,7 @@ class TidbTaskSet(TaskSet):
         else:
             print("Pass")
 
-    @task(1)
+    # @task(1)
     def execute_sql16(self):
         """select 查询in parking_id / plate_number order by entrance_time"""
         try:
