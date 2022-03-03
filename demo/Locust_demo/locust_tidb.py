@@ -1083,7 +1083,7 @@ class TidbTaskSet(TaskSet):
     def execute_sql16(self):
         """select 查询in parking_id / plate_number order by entrance_time"""
         try:
-            sql = "SELECT parking_id, plate_number FROM parking_record ORDER BY entrance_time = '2022-01-01 10:10:00' LIMIT 0, 10;"
+            sql = "SELECT parking_id, plate_number FROM parking_record ORDER BY entrance_time;"
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
             print(res)
