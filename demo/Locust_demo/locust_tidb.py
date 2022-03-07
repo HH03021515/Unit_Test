@@ -1,9 +1,11 @@
 # locust压测Tidb数据库
 
 import random
-
+import time
 import pymysql
-from locust import task, TaskSet, User
+from locust import task, TaskSet, User, env, between
+
+_locust_environment = None
 
 
 class TidbTaskSet(TaskSet):
@@ -174,6 +176,7 @@ class TidbTaskSet(TaskSet):
                        '豫A5920R', '冀R623P0', '苏CE936G', '京P6VU93', '粤D0P789', '渝BKA827',
                        '渝BVX373', '湘A3WM82', '京A8EJ31', '粤AB552S', '甘DR1178', '鄂A0X2B0',
                        '京N09M05', '浙DKL373', '京A5ES10', '苏E3V1F3']
+
     sql_synid = ['804EA97E-B2C9-4741-99A7-69FF63A69F29', '0E158819-011E-4F68-A076-69FF63A9DC6E',
                  '2A57ACCA-831E-4865-ABC4-69FF63B5DE58', 'B749BAAA-3EE3-4C9E-82EF-69FF63B7111B',
                  '9C31227D-F9B9-49CA-9824-69FF63C0061F', '9554E0E4-C19D-4D39-AAF8-69FF63C1D16F',
@@ -824,6 +827,9 @@ class TidbTaskSet(TaskSet):
                  15975, 4228, 22210, 8467, 17167, 18268, 22509, 10414, 10439, 19389, 6461, 1846, 22042, 13827, 17872,
                  16575, 8902, 9887, 15555, 17267, 21149, 16947, 9773, 16566, 14424, 17152, 16942, 14666, 12683, 4500]
 
+    def __getattr__(self, item):
+        print('getattr:', item)
+        return 'pass'
     def on_start(self):
 
         db = pymysql.connect(
@@ -1083,15 +1089,18 @@ class TidbTaskSet(TaskSet):
     def execute_sql16(self):
         """select 查询in parking_id / plate_number order by entrance_time"""
         try:
-            sql = "SELECT parking_id, plate_number FROM parking_record ORDER BY entrance_time;"
+            sql = "SELECT parking_id, plate_number FROM parking_record ORDER BY entrance_time LIMIT 0, 10;"
+            s_time = time.time()
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
-            print(res)
+            m_time = time.time()
+            print(res, s_time - m_time)
             # self.cursor.close()
         except Exception:
             print("Something went wrong!")
         else:
             print("Pass")
+
 
 
 class Tidb_Run_Set(User):
