@@ -876,7 +876,7 @@ class TidbTaskSet(TaskSet):
         """普通索引查询降序100条"""
         try:
             sql = "SELECT id, plate_number, entrance_time, exit_time, receivable_fee, update_time FROM parking_record " \
-                  "WHERE plate_number = '%s' ORDER BY update_time DESC LIMIT 100;" % str(
+                  "WHERE plate_number = '%s' ORDER BY entrance_time DESC LIMIT 100;" % str(
                 random.choice(TidbTaskSet.sql_plateNumber))
             self.cursor.execute(sql)
             res = self.cursor.fetchall()
